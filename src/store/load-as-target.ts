@@ -45,9 +45,15 @@ export function loadAsTarget(set: DecodedSet, locks: Locks): { targets: Target[]
 }
 
 /**
- * The inputs Load as target leaves: Top-up goes to 0, or Calculate would trade
- * Items for Top-up levels and show a cheaper, different Set.
+ * The inputs Load as target leaves: the code's Class, even if another was picked
+ * since; Top-up 0, or Calculate would trade Items for Top-up levels and show a
+ * cheaper, different Set.
  */
 export function loadedInputs(set: DecodedSet, inputs: Inputs): Inputs {
-  return { ...inputs, ...loadAsTarget(set, inputs.locks), topUp: { total: 0, perAttribute: 0 } };
+  return {
+    ...inputs,
+    classId: set.classId,
+    ...loadAsTarget(set, inputs.locks),
+    topUp: { total: 0, perAttribute: 0 },
+  };
 }

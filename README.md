@@ -66,7 +66,8 @@ flowchart LR
 | **Attribute** | One of 32 set bonuses. Its level is the sum of contributions across the set. |
 | **Target** | The final level you want for an attribute (overshooting is allowed). |
 | **Top-up** | Extra levels added on top of items: a total pool plus a per-attribute cap. |
-| **Lock** | A constraint you set on quality, weapon type or jewellery base. |
+| **Budget** | The most levels the items can give for your class and locks; caps each target. |
+| **Lock** | A constraint you set on quality, weapon type or jewellery base; the second weapon has its own type and quality locks. |
 | **Set code** | The game's import string for a full set. |
 
 ## 💰 Updating prices

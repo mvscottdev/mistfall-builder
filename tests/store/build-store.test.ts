@@ -217,6 +217,13 @@ describe('Set code import (ADR-0010)', () => {
     expect(state().busy).toBe(false);
   });
 
+  test("Load as target takes the code's Class back if another was picked since", () => {
+    state().importSetCode(codeOf('cls11-n1'));
+    state().setClass(10);
+    state().loadAsTarget();
+    expect(state().inputs.classId).toBe(11);
+  });
+
   test('Load as target does nothing unless a decoded Set is shown', async () => {
     await state().calculate();
     const before = state().inputs;

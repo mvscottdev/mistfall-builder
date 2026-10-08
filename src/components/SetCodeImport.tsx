@@ -21,7 +21,10 @@ export function SetCodeImport() {
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    if (!code.trim()) return setProblem(null);
+    if (!code.trim()) {
+      setProblem(null);
+      return;
+    }
     const found = importSetCode(code);
     setProblem(found);
     if (!found) setCode('');
