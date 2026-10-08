@@ -19,4 +19,6 @@ export const noLocks: Locks = {
   amuletBase: null,
   ringBase: null,
   secondWeapon: null,
+  secondWeaponType: null,
+  secondWeaponQuality: null,
 };

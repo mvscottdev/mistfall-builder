@@ -1,13 +1,7 @@
 import type { Attribute } from '../domain/types';
 import { useLocalized, useT } from '../i18n/use-t';
 import { AttributeGlyph } from './AttributeGlyph';
-import { categoryColor } from './attribute-groups';
-
-const CATEGORY_KEY = {
-  offense: 'categoryOffense',
-  defense: 'categoryDefense',
-  utility: 'categoryUtility',
-} as const;
+import { CATEGORY_LABEL, categoryColor } from './attribute-groups';
 
 /** What an Attribute does, for the icon last hovered, focused or tapped; a hint when there is none. */
 export function AttributeDetail({ attribute }: { attribute: Attribute | null }) {
@@ -25,11 +19,14 @@ export function AttributeDetail({ attribute }: { attribute: Attribute | null }) 
           <div className="min-w-0 text-xs leading-snug">
             <p className="text-sm font-semibold">
               {local(attribute.name)}{' '}
-              <span
-                className="text-[0.65rem] font-medium tracking-wider uppercase"
-                style={{ color: categoryColor(attribute.category) }}
-              >
-                · {t(CATEGORY_KEY[attribute.category])}
+              {/* Colour only on the swatch: category-coloured small text fails contrast. */}
+              <span className="ml-1 inline-flex items-center gap-1 align-middle text-[0.65rem] font-medium tracking-wider text-muted uppercase">
+                <span
+                  aria-hidden
+                  className="size-1.5 rotate-45"
+                  style={{ background: categoryColor(attribute.category) }}
+                />
+                {t(CATEGORY_LABEL[attribute.category])}
               </span>
             </p>
             <p className="line-clamp-3 text-muted">{local(attribute.description)}</p>

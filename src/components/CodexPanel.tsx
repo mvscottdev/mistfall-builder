@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Attribute, AttributeCategory } from '../domain/types';
 import { useLocalized, useT } from '../i18n/use-t';
 import { useBuild } from '../store/use-build';
@@ -6,6 +6,7 @@ import { AttributeDetail } from './AttributeDetail';
 import { AttributeGlyph } from './AttributeGlyph';
 import { useAttributeGroups } from './attribute-groups';
 import { Segmented } from './Segmented';
+import { trapKeys } from './trap-keys';
 import { useTargetToggle } from './use-target-toggle';
 
 /**
@@ -22,7 +23,15 @@ export function CodexPanel({ onClose }: { onClose: () => void }) {
   const [category, setCategory] = useState<AttributeCategory | 'all'>('all');
   const [inspected, setInspected] = useState<Attribute | null>(null);
   const panel = useRef<HTMLDivElement>(null);
+  const search = useRef<HTMLInputElement>(null);
   const picked = new Set(targets.map((target) => target.attribute));
+
+  useEffect(() => {
+    // Desktop popover: bring Done into view if the panel opens near the bottom of the page.
+    panel.current?.scrollIntoView?.({ block: 'nearest' });
+    // A touch keyboard would cover half the sheet; focus search only with a mouse.
+    if (window.matchMedia?.('(pointer: fine)').matches) search.current?.focus();
+  }, []);
 
   useEffect(() => {
     const outside = (event: PointerEvent) => {
@@ -36,13 +45,11 @@ export function CodexPanel({ onClose }: { onClose: () => void }) {
   const shown = groups
     .filter((g) => category === 'all' || g.category === category)
     .flatMap((g) => g.attributes)
-    .filter((a) => !needle || local(a.name).toLocaleLowerCase().includes(needle));
-
-  const onKeyDown = (event: KeyboardEvent) => {
-    if (event.key !== 'Escape') return;
-    event.stopPropagation();
-    onClose();
-  };
+    // Players may not know the names, so search the descriptions too ("урон", "health").
+    .filter(
+      (a) =>
+        !needle || `${local(a.name)} ${local(a.description)}`.toLocaleLowerCase().includes(needle),
+    );
 
   return (
     <>
@@ -52,12 +59,13 @@ export function CodexPanel({ onClose }: { onClose: () => void }) {
         ref={panel}
         role="dialog"
         aria-label={t('addTargetButton')}
-        onKeyDown={onKeyDown}
-        className="panel bg-panel! fixed inset-x-0 bottom-0 z-40 flex max-h-[88vh] flex-col gap-2 rounded-b-none p-3 shadow-[0_18px_40px_-12px_rgb(0_0_0/0.85)] md:absolute md:inset-x-0 md:top-full md:bottom-auto md:mt-1.5 md:max-h-none md:rounded-b-[var(--radius-lg)] md:p-2.5"
+        aria-modal="true"
+        onKeyDown={(event) => trapKeys(event, onClose)}
+        className="panel bg-panel! fixed inset-x-0 bottom-0 z-40 flex max-h-[88dvh] flex-col gap-2 rounded-b-none p-3 shadow-[0_18px_40px_-12px_rgb(0_0_0/0.85)] md:absolute md:inset-x-0 md:top-full md:bottom-auto md:mt-1.5 md:max-h-none md:rounded-b-[var(--radius-lg)] md:p-2.5"
       >
         <input
+          ref={search}
           type="search"
-          autoFocus
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder={t('search')}
@@ -65,7 +73,7 @@ export function CodexPanel({ onClose }: { onClose: () => void }) {
           className="control h-10 w-full shrink-0 px-2.5 text-sm"
         />
         <Segmented
-          label={t('targets')}
+          label={t('categoryFilter')}
           value={category}
           onChange={setCategory}
           className="w-full shrink-0 [&>button]:flex-1"

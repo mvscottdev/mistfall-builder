@@ -71,6 +71,24 @@ describe('B — searchable codex', () => {
     expect(within(codex).getByText('Nothing found')).toBeInTheDocument();
   });
 
+  test('search also reads what an Attribute does, for players who don’t know the names', () => {
+    renderWith('codex');
+    open();
+    const codex = screen.getByRole('dialog', { name: 'Add a Target' });
+    fireEvent.change(within(codex).getByRole('searchbox'), { target: { value: 'maximum health' } });
+    expect(within(codex).getByRole('button', { name: 'Tenacious' })).toBeInTheDocument();
+  });
+
+  test('Tab stays inside the Codex', () => {
+    renderWith('codex');
+    open();
+    const codex = screen.getByRole('dialog', { name: 'Add a Target' });
+    const done = within(codex).getByRole('button', { name: 'Done' });
+    done.focus();
+    fireEvent.keyDown(codex, { key: 'Tab' });
+    expect(within(codex).getByRole('searchbox')).toHaveFocus();
+  });
+
   test('Escape closes it and focus goes back to the button; Done closes it too', () => {
     renderWith('codex');
     open();
@@ -107,6 +125,16 @@ describe('C — Target tiles', () => {
     act(() => store.getState().addTarget(0));
     act(() => store.getState().setTargetLevel(0, selectBudget(store.getState())));
     expect(screen.getByRole('button', { name: 'Raise level: Wrath' })).toBeDisabled();
+  });
+
+  test('removing an opened tile closes its tiers and moves focus to the + tile', () => {
+    const store = renderWith('tiles');
+    act(() => store.getState().addTarget(0));
+    fireEvent.click(screen.getByRole('button', { name: 'Tiers: Wrath' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Remove Target: Wrath' }));
+    act(() => store.getState().addTarget(0));
+    expect(screen.queryByText('Lv 5–7')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Add a Target' })).toHaveFocus();
   });
 
   test('tapping a tile badge shows its tiers', () => {

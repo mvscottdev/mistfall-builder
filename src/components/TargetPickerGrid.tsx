@@ -23,7 +23,7 @@ export function TargetPickerGrid() {
   return (
     <div className="space-y-2">
       <Segmented
-        label={t('targets')}
+        label={t('categoryFilter')}
         value={category}
         onChange={setCategory}
         className="w-full [&>button]:flex-1"

@@ -9,11 +9,14 @@ import type {
   TopUp,
 } from '../domain/types';
 import { initialLanguage, saveLanguage, type Language } from '../i18n/language';
+import { decodeSetCode } from '../setcode/decode';
+import { SetCodeError, type SetCodeProblem } from '../setcode/error';
 import type { DecodedSet } from '../setcode/types';
 import { budget } from '../solver/budget';
 import { solve, type SolveOutcome } from '../solver/solve';
 import { locksForClass } from './class-locks';
 import { defaultInputs, type Inputs } from './inputs';
+import { loadAsTarget } from './load-as-target';
 
 /** What the doll shows: a solver outcome, a Set read from a Set code, or a solver failure. */
 export type Result =
@@ -46,6 +49,17 @@ export interface BuildState {
   setSlotQuality: (slot: Slot, quality: QualityId | null) => void;
   /** Solves the current inputs in the Worker and shows the outcome. */
   calculate: () => Promise<void>;
+  /**
+   * Reads a Set code and shows its Set as it is, switching to its Class (ADR-0010).
+   * Returns why the code can't be read, or null.
+   */
+  importSetCode: (code: string) => SetCodeProblem | null;
+  /**
+   * Turns the shown decoded Set into inputs, so Calculate gives it back (ADR-0010).
+   * Top-up goes to 0: otherwise Calculate would trade Items for Top-up levels and
+   * show a cheaper, different Set.
+   */
+  loadAsTarget: () => void;
 }
 
 export type BuildStore = ReturnType<typeof createBuildStore>;
@@ -119,6 +133,26 @@ export function createBuildStore(catalogue: Catalogue) {
           };
         }
         set({ result, resultInputs: asked, busy: false });
+      },
+
+      importSetCode: (code) => {
+        let decoded: DecodedSet;
+        try {
+          decoded = decodeSetCode(catalogue, code.trim());
+        } catch (error) {
+          if (error instanceof SetCodeError) return error.problem;
+          throw error;
+        }
+        get().setClass(decoded.classId);
+        set({ result: { kind: 'decoded', set: decoded }, resultInputs: null });
+        return null;
+      },
+
+      loadAsTarget: () => {
+        const { result, inputs } = get();
+        if (result?.kind !== 'decoded') return;
+        const loaded = loadAsTarget(result.set, inputs.locks);
+        setInputs({ ...loaded, topUp: { total: 0, perAttribute: 0 } });
       },
     };
   });

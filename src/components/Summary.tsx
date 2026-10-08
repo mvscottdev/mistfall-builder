@@ -1,19 +1,20 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useT } from '../i18n/use-t';
-import { selectShownSet, selectStale } from '../store/selectors';
+import { selectShownSet, selectOutdated } from '../store/selectors';
 import { useBuild } from '../store/use-build';
 import { CalculateButton } from './CalculateButton';
 import { CostDisplay } from './CostDisplay';
 import { LevelsList } from './LevelsList';
 import { ResultMessage } from './ResultMessage';
 import { SetCodeBox } from './SetCodeBox';
+import { SetCodeImport } from './SetCodeImport';
 
 /** Cost, Calculate, Attribute levels and Set code of the shown result. */
 export function Summary() {
   const t = useT();
   const language = useBuild((state) => state.language);
   const shown = useBuild(selectShownSet);
-  const stale = useBuild(selectStale);
+  const outdated = useBuild(selectOutdated);
   const busy = useBuild((state) => state.busy);
   const topUpUsed = shown ? Object.values(shown.topUp).reduce((sum, n) => sum + n, 0) : 0;
 
@@ -41,7 +42,7 @@ export function Summary() {
         <CalculateButton />
       </div>
       <AnimatePresence initial={false}>
-        {stale && shown && (
+        {outdated && (
           <motion.p
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
@@ -55,6 +56,7 @@ export function Summary() {
       <ResultMessage />
       <LevelsList />
       <SetCodeBox />
+      <SetCodeImport />
     </section>
   );
 }

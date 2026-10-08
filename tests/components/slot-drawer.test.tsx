@@ -67,9 +67,3 @@ test('armour Slots have no base picker', () => {
   const { dialog } = openSlot('Helmet');
   expect(within(dialog).queryByRole('combobox')).toBeNull();
 });
-
-test('the Second weapon drawer has no Locks yet', () => {
-  renderApp();
-  const { dialog } = openSlot('Second weapon');
-  expect(within(dialog).queryByRole('group', { name: 'Slot quality' })).toBeNull();
-});

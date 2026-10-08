@@ -165,8 +165,12 @@ export interface Locks {
   weaponType: number | null;
   amuletBase: number | null;
   ringBase: number | null;
-  /** Exact Item id for the Second weapon. */
+  /** Exact Item id for the Second weapon; wins over its type and quality Locks. */
   secondWeapon: number | null;
+  /** Weapon type of the Second weapon (ADR-0003); the main weapon type Lock does not apply to it. */
+  secondWeaponType: number | null;
+  /** Quality of the Second weapon (ADR-0003); the Set quality Lock does not apply to it. */
+  secondWeaponQuality: QualityId | null;
 }
 
 /** One Item of a Set with the Gem in each Mod slot (null at Built-in effects and empty Sockets). */

@@ -14,6 +14,8 @@ export const NO_LOCKS: Locks = {
   amuletBase: null,
   ringBase: null,
   secondWeapon: null,
+  secondWeaponType: null,
+  secondWeaponQuality: null,
 };
 
 /** First Class, no Targets, no Locks: the cheapest Set of the first Class. */
@@ -39,6 +41,8 @@ function sameLocks(a: Locks, b: Locks): boolean {
     a.amuletBase === b.amuletBase &&
     a.ringBase === b.ringBase &&
     a.secondWeapon === b.secondWeapon &&
+    a.secondWeaponType === b.secondWeaponType &&
+    a.secondWeaponQuality === b.secondWeaponQuality &&
     overridden.every((slot) => a.slotQuality[slot] === b.slotQuality[slot])
   );
 }

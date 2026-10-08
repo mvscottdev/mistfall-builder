@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+import goldenRaw from '../fixtures/golden.json?raw';
 import { budget } from '../../src/solver/budget';
 import { solve, type SolveOutcome } from '../../src/solver/solve';
 import { createBuildStore } from '../../src/store/build-store';
@@ -171,5 +172,44 @@ describe('language', () => {
     expect(createBuildStore(catalogue).getState().language).toBe('ru');
     state().setLanguage('en');
     expect(createBuildStore(catalogue).getState().language).toBe('en');
+  });
+});
+
+describe('Set code import (ADR-0010)', () => {
+  const golden = JSON.parse(goldenRaw).scenarios as {
+    label: string;
+    output: { code: string } | null;
+  }[];
+  const codeOf = (label: string) => golden.find((s) => s.label === label)?.output?.code ?? '';
+
+  test('a pasted code shows its Set as it is and switches to its Class', () => {
+    const problem = state().importSetCode(` ${codeOf('cls11-n1')} `);
+    expect(problem).toBeNull();
+    expect(state().inputs.classId).toBe(11);
+    expect(state().result?.kind).toBe('decoded');
+    expect(state().resultInputs).toBeNull();
+  });
+
+  test('an unreadable code says why and leaves the result alone', () => {
+    expect(state().importSetCode('not a code!')).toBe('notBase62');
+    expect(state().result).toBeNull();
+  });
+
+  test('Load as target turns the shown Set into Targets and Locks, with Top-up 0', () => {
+    state().setLock('quality', 3);
+    state().importSetCode(codeOf('cls10-n1'));
+    state().loadAsTarget();
+    const { targets, locks, topUp } = state().inputs;
+    expect(targets.length).toBeGreaterThan(0);
+    expect(locks.quality).toBe(3);
+    expect(Object.keys(locks.slotQuality)).toHaveLength(8);
+    expect(topUp).toEqual({ total: 0, perAttribute: 0 });
+  });
+
+  test('Load as target does nothing unless a decoded Set is shown', async () => {
+    await state().calculate();
+    const before = state().inputs;
+    state().loadAsTarget();
+    expect(state().inputs).toBe(before);
   });
 });

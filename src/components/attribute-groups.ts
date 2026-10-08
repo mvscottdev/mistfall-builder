@@ -10,11 +10,12 @@ export interface AttributeGroup {
   attributes: Attribute[];
 }
 
-const CATEGORIES: [AttributeCategory, TextKey][] = [
-  ['offense', 'categoryOffense'],
-  ['defense', 'categoryDefense'],
-  ['utility', 'categoryUtility'],
-];
+/** Each category's UI text, in display order. */
+export const CATEGORY_LABEL: Record<AttributeCategory, TextKey> = {
+  offense: 'categoryOffense',
+  defense: 'categoryDefense',
+  utility: 'categoryUtility',
+};
 
 /** Attributes by category, each sorted by name in the current language. */
 export function useAttributeGroups(): AttributeGroup[] {
@@ -22,13 +23,15 @@ export function useAttributeGroups(): AttributeGroup[] {
   const language = useBuild((state) => state.language);
   return useMemo(
     () =>
-      CATEGORIES.map(([category, label]) => ({
-        category,
-        label,
-        attributes: attributes
-          .filter((a) => a.category === category)
-          .sort((a, b) => a.name[language].localeCompare(b.name[language], language)),
-      })),
+      (Object.entries(CATEGORY_LABEL) as [AttributeCategory, TextKey][]).map(
+        ([category, label]) => ({
+          category,
+          label,
+          attributes: attributes
+            .filter((a) => a.category === category)
+            .sort((a, b) => a.name[language].localeCompare(b.name[language], language)),
+        }),
+      ),
     [attributes, language],
   );
 }

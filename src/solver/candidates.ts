@@ -42,7 +42,10 @@ export function slotCandidates(
   );
 }
 
-/** Priced weapons of the Class, any quality or type; only the exact-item Lock applies. */
+/**
+ * Priced weapons of the Class for the Second weapon. Only its own Locks apply:
+ * an exact Item, else its weapon type and quality; never the main Slots' Locks.
+ */
 export function secondWeaponCandidates(
   catalogue: Catalogue,
   classId: ClassId,
@@ -53,6 +56,9 @@ export function secondWeaponCandidates(
       isPriced(item) &&
       item.slot === 'weapon' &&
       fitsClass(item, classId) &&
-      (locks.secondWeapon === null || item.id === locks.secondWeapon),
+      (locks.secondWeapon !== null
+        ? item.id === locks.secondWeapon
+        : (locks.secondWeaponType === null || item.weaponType === locks.secondWeaponType) &&
+          (locks.secondWeaponQuality === null || item.quality === locks.secondWeaponQuality)),
   );
 }

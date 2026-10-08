@@ -6,10 +6,11 @@ import { selectAttributeById, selectBudget } from '../store/selectors';
 import { useBuild } from '../store/use-build';
 import { AttributeGlyph } from './AttributeGlyph';
 import { CodexPanel } from './CodexPanel';
+import { Stepper } from './Stepper';
 import { TierList } from './TierList';
 
 /**
- * Variant C: each Target is a small tile (badge, level, − +); a "+" tile opens
+ * Variant C: each Target is a small tile (badge, tier marks, level Stepper); a "+" tile opens
  * the Codex. Tapping a badge shows that Target's tiers under the tiles.
  */
 export function TargetTiles() {
@@ -29,12 +30,11 @@ export function TargetTiles() {
   const [opened, setOpened] = useState<AttributeId | null>(null);
   const openedTarget = targets.find((target) => target.attribute === opened);
   const openedAttribute = openedTarget && byId.get(openedTarget.attribute);
-  const step =
-    'grid size-8 place-items-center rounded-ui text-base text-muted hover:bg-panel hover:text-text disabled:opacity-30';
 
   return (
     <div className="relative space-y-2">
-      <ul className="grid grid-cols-3 gap-1.5">
+      {/* Two columns where the panel is narrow, so the level Stepper keeps full-size buttons. */}
+      <ul className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-2">
         <AnimatePresence initial={false}>
           {targets.map(({ attribute: id, level }) => {
             const attribute = byId.get(id);
@@ -66,35 +66,33 @@ export function TargetTiles() {
                 >
                   {name}
                 </span>
-                <span className="flex items-center">
-                  <button
-                    type="button"
-                    className={step}
-                    aria-label={t('lowerLevel', { name })}
-                    disabled={level <= 1}
-                    onClick={() => setTargetLevel(id, level - 1)}
-                  >
-                    −
-                  </button>
-                  <span className="w-5 text-center text-sm font-semibold tabular-nums">
-                    {level}
-                  </span>
-                  <button
-                    type="button"
-                    className={step}
-                    aria-label={t('raiseLevel', { name })}
-                    title={level >= budget ? t('atBudget') : undefined}
-                    disabled={level >= budget}
-                    onClick={() => setTargetLevel(id, level + 1)}
-                  >
-                    +
-                  </button>
+                <span aria-hidden className="flex gap-1">
+                  {attribute.tiers.map((tier) => (
+                    <span
+                      key={tier.fromLevel}
+                      className={`h-1 w-3 rounded-full ${level >= tier.fromLevel ? 'bg-accent' : 'bg-line-strong'}`}
+                    />
+                  ))}
                 </span>
+                <Stepper
+                  value={level}
+                  min={1}
+                  max={budget}
+                  onChange={(value) => setTargetLevel(id, value)}
+                  label={t('levelOf', { name })}
+                  lowerLabel={t('lowerLevel', { name })}
+                  raiseLabel={t('raiseLevel', { name })}
+                  raiseTitle={t('atBudget')}
+                />
                 <button
                   type="button"
                   aria-label={t('removeTarget', { name })}
-                  onClick={() => removeTarget(id)}
-                  className="absolute top-0.5 right-0.5 grid size-6 place-items-center rounded-ui text-xs text-muted hover:text-danger"
+                  onClick={() => {
+                    removeTarget(id);
+                    if (opened === id) setOpened(null);
+                    addButton.current?.focus();
+                  }}
+                  className="absolute top-0.5 right-0.5 grid size-8 place-items-center rounded-ui text-xs text-muted hover:text-danger"
                 >
                   ✕
                 </button>

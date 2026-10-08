@@ -2,7 +2,7 @@ import { AnimatePresence } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import type { Locks, SetSlot } from '../domain/types';
 import { useLocalized } from '../i18n/use-t';
-import { BASE_LOCK, selectClasses, selectShownSet, selectStale } from '../store/selectors';
+import { BASE_LOCK, selectClasses, selectShownSet, selectOutdated } from '../store/selectors';
 import { useBuild } from '../store/use-build';
 import { GameIcon } from './GameIcon';
 import { SlotDrawer } from './SlotDrawer';
@@ -22,7 +22,13 @@ const SLOTS: SetSlot[] = [
 ];
 
 function slotLocked(slot: SetSlot, locks: Locks): boolean {
-  if (slot === 'weapon2') return locks.secondWeapon !== null;
+  if (slot === 'weapon2') {
+    return (
+      locks.secondWeapon !== null ||
+      locks.secondWeaponType !== null ||
+      locks.secondWeaponQuality !== null
+    );
+  }
   const base = BASE_LOCK[slot];
   return locks.slotQuality[slot] !== undefined || (base !== undefined && locks[base] !== null);
 }
@@ -31,7 +37,7 @@ function slotLocked(slot: SetSlot, locks: Locks): boolean {
 export function Paperdoll() {
   const local = useLocalized();
   const shown = useBuild(selectShownSet);
-  const stale = useBuild(selectStale);
+  const outdated = useBuild(selectOutdated);
   const locks = useBuild((state) => state.inputs.locks);
   const classId = useBuild((state) => state.inputs.classId);
   const cls = useBuild(selectClasses).find((c) => c.id === classId);
@@ -53,7 +59,7 @@ export function Paperdoll() {
     <section aria-label={cls ? local(cls.name) : undefined} className="relative">
       <div
         className={`grid grid-cols-3 gap-2 transition-opacity duration-200 sm:gap-3 md:grid-cols-[1fr_1.25fr_1fr] md:[grid-template-areas:'helmet_figure_amulet'_'chest_figure_ring'_'bracers_figure_weapon'_'pants_boots_weapon2'] ${
-          stale && shown ? 'opacity-85 saturate-50' : ''
+          outdated ? 'opacity-85 saturate-50' : ''
         }`}
       >
         {cls && (
