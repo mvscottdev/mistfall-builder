@@ -17,10 +17,8 @@
 ---
 
 > [!NOTE]
-> **Work in progress.** The solver and the build editor work. Set code import,
-> Load as target and the Second weapon picker come next. Two looks are on
-> offer until one is chosen: **Forge** and **Mist** (switch in the header, or
-> add `?design=forge` / `?design=mist` to the URL).
+> Two looks are on offer until one is chosen: **Forge** and **Mist** (switch in
+> the header, or add `?design=forge` / `?design=mist` to the URL).
 
 ## ✨ What it does
 

@@ -16,7 +16,7 @@ import { budget } from '../solver/budget';
 import { solve, type SolveOutcome } from '../solver/solve';
 import { locksForClass } from './class-locks';
 import { defaultInputs, type Inputs } from './inputs';
-import { loadAsTarget } from './load-as-target';
+import { loadedInputs } from './load-as-target';
 
 /** What the doll shows: a solver outcome, a Set read from a Set code, or a solver failure. */
 export type Result =
@@ -54,11 +54,7 @@ export interface BuildState {
    * Returns why the code can't be read, or null.
    */
   importSetCode: (code: string) => SetCodeProblem | null;
-  /**
-   * Turns the shown decoded Set into inputs, so Calculate gives it back (ADR-0010).
-   * Top-up goes to 0: otherwise Calculate would trade Items for Top-up levels and
-   * show a cheaper, different Set.
-   */
+  /** Turns the shown decoded Set into inputs, so Calculate gives it back (ADR-0010). */
   loadAsTarget: () => void;
 }
 
@@ -121,7 +117,7 @@ export function createBuildStore(catalogue: Catalogue) {
 
       calculate: async () => {
         if (get().busy) return;
-        const asked = get().inputs;
+        const { inputs: asked, result: shown } = get();
         set({ busy: true });
         let result: Result;
         try {
@@ -132,6 +128,8 @@ export function createBuildStore(catalogue: Catalogue) {
             message: error instanceof Error ? error.message : String(error),
           };
         }
+        // A Set code shown meanwhile stays: this outcome is for inputs it replaced.
+        if (get().result !== shown) return set({ busy: false });
         set({ result, resultInputs: asked, busy: false });
       },
 
@@ -151,8 +149,7 @@ export function createBuildStore(catalogue: Catalogue) {
       loadAsTarget: () => {
         const { result, inputs } = get();
         if (result?.kind !== 'decoded') return;
-        const loaded = loadAsTarget(result.set, inputs.locks);
-        setInputs({ ...loaded, topUp: { total: 0, perAttribute: 0 } });
+        set({ inputs: loadedInputs(result.set, inputs) });
       },
     };
   });

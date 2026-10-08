@@ -13,6 +13,7 @@ import type {
 import { budget } from '../solver/budget';
 import type { BuildState } from './build-store';
 import { sameInputs } from './inputs';
+import { loadedInputs } from './load-as-target';
 import { shownDecodedSet, shownSolvedSet, type ShownSet } from './shown-set';
 
 // Selectors must return the same reference while nothing they read changed,
@@ -25,6 +26,11 @@ export const selectStale = (state: BuildState): boolean =>
 /** A solved Set is shown for other inputs than the current ones (a decoded Set never is). */
 export const selectOutdated = (state: BuildState): boolean =>
   state.result?.kind === 'solved' && selectStale(state);
+
+/** A decoded Set is shown and the inputs already are what Load as target makes of it. */
+export const selectLoadedAsTarget = (state: BuildState): boolean =>
+  state.result?.kind === 'decoded' &&
+  sameInputs(state.inputs, loadedInputs(state.result.set, state.inputs));
 
 export const selectClasses = (state: BuildState) => state.catalogue.classes;
 export const selectQualities = (state: BuildState) => state.catalogue.qualities;

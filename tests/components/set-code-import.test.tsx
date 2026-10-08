@@ -37,6 +37,23 @@ describe('Set code import', () => {
     expect(screen.getByLabelText('Paste a Set code')).toHaveAttribute('aria-invalid', 'true');
   });
 
+  test('editing the code clears the last error', () => {
+    renderApp();
+    paste('hello world');
+    fireEvent.change(screen.getByLabelText('Paste a Set code'), { target: { value: 'h' } });
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(screen.getByLabelText('Paste a Set code')).toHaveAttribute('aria-invalid', 'false');
+  });
+
+  test('once the loaded inputs are edited, Load as target is offered again', () => {
+    const store = renderApp();
+    paste(codeOf('cls10-n1'));
+    fireEvent.click(screen.getByRole('button', { name: 'Load as target' }));
+    expect(screen.queryByRole('button', { name: 'Load as target' })).toBeNull();
+    act(() => store.getState().setTopUp({ total: 4, perAttribute: 1 }));
+    expect(screen.getByRole('button', { name: 'Load as target' })).toBeInTheDocument();
+  });
+
   test('Load as target makes the shown Set the inputs, with Top-up 0', async () => {
     const store = renderApp();
     paste(codeOf('cls10-weapon2Lock'));
