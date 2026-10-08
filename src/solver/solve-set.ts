@@ -7,7 +7,7 @@ import type {
   Target,
   TopUp,
 } from '../domain/types';
-import { budget, isOverBudget, requestedPoints } from './budget';
+import { budget } from './budget';
 import { solveMip, type Highs } from './mip';
 import { setVariants } from './variants';
 
@@ -29,14 +29,16 @@ export type SolveOutcome =
 /** The cheapest Set for the request; at equal cost, the one with least Top-up. */
 export function solveSet(catalogue: Catalogue, highs: Highs, request: SolveRequest): SolveOutcome {
   const { classId, targets, locks, topUp } = request;
-  const requested = requestedPoints(targets);
+  const requested = targets.reduce((sum, target) => sum + target.level, 0);
   const budgetPoints = budget(catalogue, classId, locks);
-  if (isOverBudget(requested, budgetPoints, topUp)) {
+  // More than Budget + Top-up total can't be met: don't run the MIP.
+  if (requested > budgetPoints + topUp.total) {
     return { kind: 'overBudget', requested, budget: budgetPoints, topUpTotal: topUp.total };
   }
 
   const order = targets.map((target) => target.attribute);
   const slots = setVariants(catalogue, classId, locks, order);
+  // Deliberate: the old code built an LP with an empty Slot row here, which also ended infeasible.
   if (slots.some((slot) => slot.variants.length === 0)) return { kind: 'infeasible' };
   const choice = solveMip(highs, { slots, targets, topUp });
   if (!choice) return { kind: 'infeasible' };

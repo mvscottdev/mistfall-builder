@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { budget, isOverBudget, requestedPoints } from '../../src/solver/budget';
+import { budget } from '../../src/solver/budget';
 import { builtIn, catalogueWith, gem, item, socket, SQUARE, TRIANGLE } from './make';
 import { noLocks } from './page-catalogue';
 
@@ -40,13 +40,5 @@ describe('Budget', () => {
       item({ id: 2, slot: 'weapon', modSlots: [builtIn({ 0: 1 })] }),
     ]);
     expect(budget(catalogue, 10, noLocks)).toBe(3);
-  });
-
-  test('Targets over Budget + Top-up total are over budget; exactly at it is not', () => {
-    const topUp = { total: 8, perAttribute: 2 };
-    const targets = (levels: number[]) => levels.map((level, i) => ({ attribute: i, level }));
-    expect(requestedPoints(targets([10, 8]))).toBe(18);
-    expect(isOverBudget(requestedPoints(targets([10, 8])), 10, topUp)).toBe(false);
-    expect(isOverBudget(requestedPoints(targets([10, 9])), 10, topUp)).toBe(true);
   });
 });

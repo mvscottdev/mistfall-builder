@@ -35,6 +35,16 @@ describe('solving a Set', () => {
     expect(outcome).toEqual({ kind: 'overBudget', requested: 4, budget: 1, topUpTotal: 2 });
   });
 
+  test('Targets exactly at Budget + Top-up total are still solved', async () => {
+    const highs = await highsLoader();
+    const outcome = solveSet(
+      helmetCatalogue,
+      highs,
+      request({ targets: [{ attribute: 0, level: 3 }], topUp: { total: 2, perAttribute: 2 } }),
+    );
+    expect(outcome.kind).toBe('solved');
+  });
+
   test('Targets no Set can meet give one generic infeasible outcome', async () => {
     const highs = await highsLoader();
     const outcome = solveSet(

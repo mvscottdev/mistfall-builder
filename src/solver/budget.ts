@@ -1,12 +1,4 @@
-import type {
-  Catalogue,
-  ClassId,
-  Contribution,
-  Locks,
-  ModSlot,
-  Target,
-  TopUp,
-} from '../domain/types';
+import type { Catalogue, ClassId, Contribution, Locks, ModSlot } from '../domain/types';
 import { slotCandidates } from './candidates';
 import { fittingGems } from './mod-options';
 
@@ -33,14 +25,4 @@ export function budget(catalogue: Catalogue, classId: ClassId, locks: Locks): nu
     );
   }
   return sum;
-}
-
-/** Sum of Target levels. */
-export function requestedPoints(targets: Target[]): number {
-  return targets.reduce((sum, target) => sum + target.level, 0);
-}
-
-/** Targets asking for more than Budget + Top-up total can't be met; don't solve. */
-export function isOverBudget(requested: number, budgetPoints: number, topUp: TopUp): boolean {
-  return requested > budgetPoints + topUp.total;
 }

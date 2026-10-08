@@ -1,17 +1,7 @@
 import type { Target, TopUp } from '../domain/types';
 import type { SlotVariants } from './variants';
 
-/**
- * The MIP in CPLEX LP text, as HiGHS reads it.
- *
- * - `x_<slot>_<variant>`: binary, 1 = this variant fills the Slot; exactly one per Slot.
- * - `t_<attribute>`: integer Top-up for a Target, 0 ≤ t ≤ min(per-Attribute cap, level),
- *   all together ≤ the Top-up total.
- * - Per Target: levels from the chosen variants + Top-up ≥ the Target level.
- *
- * The text is kept byte-for-byte as the old solver wrote it: HiGHS breaks ties
- * between equal-cost Sets by variable and row order.
- */
+/** What the MIP is built from. */
 export interface LpModel {
   slots: SlotVariants[];
   targets: Target[];
@@ -56,6 +46,17 @@ function constraints(model: LpModel, goal: LpGoal, firstVariant: string): string
   return rows;
 }
 
+/**
+ * The MIP in CPLEX LP text, as HiGHS reads it.
+ *
+ * - `x_<slot>_<variant>`: binary, 1 = this variant fills the Slot; exactly one per Slot.
+ * - `t_<attribute>`: integer Top-up for a Target, 0 ≤ t ≤ min(per-Attribute cap, level),
+ *   all together ≤ the Top-up total.
+ * - Per Target: levels from the chosen variants + Top-up ≥ the Target level.
+ *
+ * The text is kept byte-for-byte as the old solver wrote it: HiGHS breaks ties
+ * between equal-cost Sets by variable and row order.
+ */
 export function lpText(model: LpModel, goal: LpGoal): string {
   const { slots, targets, topUp } = model;
   const binaries = slots.flatMap((slot, s) => slot.variants.map((_, v) => variantName(s, v)));

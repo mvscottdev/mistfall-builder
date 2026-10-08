@@ -29,7 +29,9 @@ function cartesian(lists: ModOption[][]): ModOption[][] {
 /**
  * Every Item × Gem combination for a main Slot, deduped by projected vector:
  * the cheapest kept, the first found on a price tie. Every Socket gets a Gem,
- * so an Item with a Socket no priced Gem fits gives no variants.
+ * so an Item with a Socket no priced Gem fits gives no variants. A Socket no
+ * Target needs projects to the zero vector for every Gem, so dedup leaves it
+ * the cheapest fitting Gem: the Filler.
  */
 export function mainSlotVariants(
   catalogue: Catalogue,

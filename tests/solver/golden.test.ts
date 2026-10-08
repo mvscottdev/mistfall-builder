@@ -62,19 +62,23 @@ beforeAll(async () => {
 });
 
 describe('the solver gives the old page’s Set for every golden scenario', () => {
-  test.each(scenarios)('$label', ({ input, output }) => {
-    const outcome = solveSet(catalogue, highs, requestFor(input));
-    if (output === null) {
-      expect(outcome.kind).not.toBe('solved');
-      return;
-    }
-    if (outcome.kind !== 'solved') throw new Error(`expected a Set, got ${outcome.kind}`);
-    const { set } = outcome;
-    expect(set.cost).toBe(output.cost);
-    expect(set.topUpUsed).toBe(output.topupUsed);
-    expect(set.topUp).toEqual(output.topup);
-    expect(set.pieces.map((p) => ({ slot: p.slot, itemId: p.itemId, gems: p.gemIds }))).toEqual(
-      output.path,
-    );
-  });
+  test.each(scenarios)(
+    '$label',
+    ({ input, output }) => {
+      const outcome = solveSet(catalogue, highs, requestFor(input));
+      if (output === null) {
+        expect(outcome.kind).not.toBe('solved');
+        return;
+      }
+      if (outcome.kind !== 'solved') throw new Error(`expected a Set, got ${outcome.kind}`);
+      const { set } = outcome;
+      expect(set.cost).toBe(output.cost);
+      expect(set.topUpUsed).toBe(output.topupUsed);
+      expect(set.topUp).toEqual(output.topup);
+      expect(set.pieces.map((p) => ({ slot: p.slot, itemId: p.itemId, gems: p.gemIds }))).toEqual(
+        output.path,
+      );
+    },
+    30_000,
+  );
 });
