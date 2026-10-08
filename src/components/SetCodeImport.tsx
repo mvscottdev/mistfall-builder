@@ -11,7 +11,10 @@ export function SetCodeImport() {
   const t = useT();
   const importSetCode = useBuild((state) => state.importSetCode);
   const loadAsTarget = useBuild((state) => state.loadAsTarget);
-  const decoded = useBuild((state) => state.result?.kind === 'decoded');
+  const result = useBuild((state) => state.result);
+  const decoded = result?.kind === 'decoded';
+  // The decoded result last loaded, so the button turns into a confirmation for it.
+  const [loadedFrom, setLoadedFrom] = useState<typeof result>(null);
   const [code, setCode] = useState('');
   const [problem, setProblem] = useState<SetCodeProblem | null>(null);
 
@@ -57,10 +60,25 @@ export function SetCodeImport() {
       {decoded && (
         <div className="rounded-ui border border-accent/50 bg-accent/10 p-2.5 text-xs">
           <p className="mb-2">{t('decodedShown')}</p>
-          <button type="button" onClick={loadAsTarget} className="btn-primary h-10 w-full text-sm">
-            {t('loadAsTarget')}
-          </button>
-          <p className="mt-1.5 text-muted">{t('loadAsTargetHint')}</p>
+          {loadedFrom === result ? (
+            <p role="status" className="font-semibold text-accent">
+              {t('loadedAsTarget')}
+            </p>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  loadAsTarget();
+                  setLoadedFrom(result);
+                }}
+                className="btn-primary h-10 w-full text-sm"
+              >
+                {t('loadAsTarget')}
+              </button>
+              <p className="mt-1.5 text-muted">{t('loadAsTargetHint')}</p>
+            </>
+          )}
         </div>
       )}
     </div>

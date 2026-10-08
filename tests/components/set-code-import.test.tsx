@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
 import goldenRaw from '../fixtures/golden.json?raw';
 import { renderApp } from './render-app';
@@ -70,16 +70,15 @@ describe('Second weapon picker', () => {
     expect(locks.quality).toBeNull();
   });
 
-  test('a pinned exact weapon can be unpinned; picking a type also unpins it', () => {
+  test('while an exact weapon is pinned its type and quality are hidden; Unpin brings them back', () => {
     const store = renderApp();
-    store.getState().setLock('secondWeapon', 3030101);
+    act(() => store.getState().setLock('secondWeapon', 3030101));
     openSecond();
     const dialog = screen.getByRole('dialog', { name: 'Second weapon' });
     expect(within(dialog).getByText(/Pinned to the exact weapon/)).toBeInTheDocument();
-    fireEvent.change(within(dialog).getByRole('combobox', { name: 'Weapon type' }), {
-      target: { value: '1' },
-    });
+    expect(within(dialog).queryByRole('combobox', { name: 'Weapon type' })).toBeNull();
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Unpin' }));
     expect(store.getState().inputs.locks.secondWeapon).toBeNull();
-    expect(store.getState().inputs.locks.secondWeaponType).toBe(1);
+    expect(within(dialog).getByRole('combobox', { name: 'Weapon type' })).toBeInTheDocument();
   });
 });

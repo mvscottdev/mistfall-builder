@@ -95,6 +95,7 @@ export const en: Record<TextKey, string> = {
     'Its bonuses and Item qualities become your Targets and Locks (Top-up 0), so Calculate gives this Set back.',
   secondWeaponPinned: 'Pinned to the exact weapon from the code.',
   unpin: 'Unpin',
-  cheapestAny: 'Cheapest of any',
+  loadedAsTarget: 'Done: Targets and Locks are set — press Calculate.',
+  cheapestAny: 'Any (cheapest)',
   secondWeaponNote: 'The Second weapon has no Targets but counts in cost and code.',
 };

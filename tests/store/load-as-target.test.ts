@@ -128,7 +128,7 @@ describe('Load as target (ADR-0010)', () => {
     30000,
   );
 
-  test('the same Items come back unless another Item ties on price (1 golden Set in 36)', () => {
+  test('the same Items come back unless another Item ties on price (1 of 35 full golden Sets)', () => {
     const differing = full.filter((scenario) => {
       const g = scenario.output;
       if (!g) return false;

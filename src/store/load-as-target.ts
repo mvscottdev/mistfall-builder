@@ -1,4 +1,4 @@
-import type { Item, Locks, Target } from '../domain/types';
+import type { Locks, Target } from '../domain/types';
 import type { DecodedSet } from '../setcode/types';
 import { setLevels } from './shown-set';
 
@@ -13,7 +13,7 @@ import { setLevels } from './shown-set';
  */
 export function loadAsTarget(set: DecodedSet, locks: Locks): { targets: Target[]; locks: Locks } {
   const filled = set.entries.flatMap((entry) =>
-    entry.item ? [{ ...entry, item: entry.item as Item }] : [],
+    entry.item ? [{ ...entry, item: entry.item }] : [],
   );
   const targets = Object.entries(setLevels(filled))
     .map(([attribute, level]) => ({ attribute: Number(attribute), level }))
