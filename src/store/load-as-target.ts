@@ -1,5 +1,6 @@
 import type { Locks, Target } from '../domain/types';
 import type { DecodedSet } from '../setcode/types';
+import type { Inputs } from './inputs';
 import { setLevels } from './shown-set';
 
 /**
@@ -41,4 +42,18 @@ export function loadAsTarget(set: DecodedSet, locks: Locks): { targets: Target[]
     if (slot === 'ring') loaded.ringBase = item.base ?? null;
   }
   return { targets, locks: loaded };
+}
+
+/**
+ * The inputs Load as target leaves: the code's Class, even if another was picked
+ * since; Top-up 0, or Calculate would trade Items for Top-up levels and show a
+ * cheaper, different Set.
+ */
+export function loadedInputs(set: DecodedSet, inputs: Inputs): Inputs {
+  return {
+    ...inputs,
+    classId: set.classId,
+    ...loadAsTarget(set, inputs.locks),
+    topUp: { total: 0, perAttribute: 0 },
+  };
 }

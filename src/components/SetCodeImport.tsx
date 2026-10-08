@@ -1,6 +1,7 @@
 import { useRef, useState, type FormEvent } from 'react';
 import type { SetCodeProblem } from '../setcode/error';
 import { useT } from '../i18n/use-t';
+import { selectLoadedAsTarget } from '../store/selectors';
 import { useBuild } from '../store/use-build';
 
 /** Codes that are not Set codes at all, versus ones made for other game data. */
@@ -11,17 +12,19 @@ export function SetCodeImport() {
   const t = useT();
   const importSetCode = useBuild((state) => state.importSetCode);
   const loadAsTarget = useBuild((state) => state.loadAsTarget);
-  const result = useBuild((state) => state.result);
-  const decoded = result?.kind === 'decoded';
-  // The decoded result last loaded, so the button turns into a confirmation for it.
-  const [loadedFrom, setLoadedFrom] = useState<typeof result>(null);
+  const decoded = useBuild((state) => state.result?.kind === 'decoded');
+  // Until the inputs are edited, the button stays a confirmation.
+  const loaded = useBuild(selectLoadedAsTarget);
   const confirmation = useRef<HTMLParagraphElement>(null);
   const [code, setCode] = useState('');
   const [problem, setProblem] = useState<SetCodeProblem | null>(null);
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    if (!code.trim()) return;
+    if (!code.trim()) {
+      setProblem(null);
+      return;
+    }
     const found = importSetCode(code);
     setProblem(found);
     if (!found) setCode('');
@@ -40,7 +43,10 @@ export function SetCodeImport() {
           <input
             id="import-code"
             value={code}
-            onChange={(event) => setCode(event.target.value)}
+            onChange={(event) => {
+              setCode(event.target.value);
+              setProblem(null);
+            }}
             placeholder={t('importPlaceholder')}
             autoComplete="off"
             spellCheck={false}
@@ -61,7 +67,7 @@ export function SetCodeImport() {
       {decoded && (
         <div className="rounded-ui border border-accent/50 bg-accent/10 p-2.5 text-xs">
           <p className="mb-2">{t('decodedShown')}</p>
-          {loadedFrom === result ? (
+          {loaded ? (
             <p ref={confirmation} tabIndex={-1} className="font-semibold text-accent">
               {t('loadedAsTarget')}
             </p>
@@ -71,7 +77,6 @@ export function SetCodeImport() {
                 type="button"
                 onClick={() => {
                   loadAsTarget();
-                  setLoadedFrom(result);
                   // The button is replaced: focus the confirmation, so it is read out and Tab continues here.
                   requestAnimationFrame(() => confirmation.current?.focus());
                 }}

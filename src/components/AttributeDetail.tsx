@@ -9,10 +9,8 @@ export function AttributeDetail({ attribute }: { attribute: Attribute | null }) 
   const local = useLocalized();
 
   return (
-    <div
-      aria-live="polite"
-      className="flex min-h-[4.75rem] gap-2.5 rounded-ui border border-line bg-panel-2/60 p-2.5"
-    >
+    // Not a live region: it changes on hover, and the icons already carry their names.
+    <div className="flex min-h-[4.75rem] gap-2.5 rounded-ui border border-line bg-panel-2/60 p-2.5">
       {attribute ? (
         <>
           <AttributeGlyph attribute={attribute} className="size-9" />

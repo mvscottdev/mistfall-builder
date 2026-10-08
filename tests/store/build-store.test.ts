@@ -206,6 +206,24 @@ describe('Set code import (ADR-0010)', () => {
     expect(topUp).toEqual({ total: 0, perAttribute: 0 });
   });
 
+  test('a Calculate still running when a code is pasted does not replace the shown Set', async () => {
+    let finish: (outcome: SolveOutcome) => void = () => {};
+    solveMock.mockReturnValue(new Promise((resolve) => (finish = resolve)));
+    const running = state().calculate();
+    state().importSetCode(codeOf('cls11-n1'));
+    finish(solved);
+    await running;
+    expect(state().result?.kind).toBe('decoded');
+    expect(state().busy).toBe(false);
+  });
+
+  test("Load as target takes the code's Class back if another was picked since", () => {
+    state().importSetCode(codeOf('cls11-n1'));
+    state().setClass(10);
+    state().loadAsTarget();
+    expect(state().inputs.classId).toBe(11);
+  });
+
   test('Load as target does nothing unless a decoded Set is shown', async () => {
     await state().calculate();
     const before = state().inputs;
