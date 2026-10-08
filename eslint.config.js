@@ -17,4 +17,29 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
+  {
+    // Components read the catalogue only through store selectors (src/store/selectors.ts).
+    files: ['src/components/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            { group: ['**/catalogue/*'], message: 'Read the catalogue through store selectors.' },
+          ],
+        },
+      ],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "MemberExpression[property.name='catalogue']",
+          message: 'Read the catalogue through store selectors.',
+        },
+        {
+          selector: "ObjectPattern > Property[key.name='catalogue']",
+          message: 'Read the catalogue through store selectors.',
+        },
+      ],
+    },
+  },
 );
