@@ -1,0 +1,1539 @@
+{
+ "source": "Set codes exported by the game, with the plan the game logged for each (old data/raw/logs/plans.jsonl). gems: gem cfgId per socket, 0 = empty.",
+ "pairs": [
+  {
+   "code": "17lpUwp2OXf1Kp5MmIKccDaOZiOstoxWWQF31e6a",
+   "equips": [
+    {
+     "cfgId": 1140103,
+     "slot": 0,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1240103,
+     "slot": 1,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1340103,
+     "slot": 2,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1440103,
+     "slot": 3,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1540103,
+     "slot": 4,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1640303,
+     "slot": 5,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 1740303,
+     "slot": 6,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 3040203,
+     "slot": 10,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 3040103,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "17lpV8av9TwrVzdDA3CIH0tbmHoaF7vCJ75n61hI",
+   "equips": [
+    {
+     "cfgId": 1140104,
+     "slot": 0,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1240104,
+     "slot": 1,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1340104,
+     "slot": 2,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1440104,
+     "slot": 3,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1540105,
+     "slot": 4,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1640402,
+     "slot": 5,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 1740402,
+     "slot": 6,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 3040204,
+     "slot": 10,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 3040105,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "1HDaxLx2UJ2ZVSx6HmyMbzH6XJU1vbSj64j99qfN7xMe",
+   "equips": [
+    {
+     "cfgId": 1140106,
+     "slot": 0,
+     "gems": [
+      224105
+     ]
+    },
+    {
+     "cfgId": 1240107,
+     "slot": 1,
+     "gems": [
+      221106
+     ]
+    },
+    {
+     "cfgId": 1340109,
+     "slot": 2,
+     "gems": [
+      222102,
+      223107
+     ]
+    },
+    {
+     "cfgId": 1440105,
+     "slot": 3,
+     "gems": [
+      222102
+     ]
+    },
+    {
+     "cfgId": 1540101,
+     "slot": 4,
+     "gems": [
+      221106
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      221110,
+      223103
+     ]
+    },
+    {
+     "cfgId": 1740302,
+     "slot": 6,
+     "gems": [
+      222101,
+      224105
+     ]
+    },
+    {
+     "cfgId": 3040208,
+     "slot": 10,
+     "gems": [
+      221107,
+      222101
+     ]
+    },
+    {
+     "cfgId": 3040104,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "1HDaxLx2UKVqAuOYp6uK4IEKQk9gkkHDEnb1ybPNWKH2",
+   "equips": [
+    {
+     "cfgId": 1140106,
+     "slot": 0,
+     "gems": [
+      224105
+     ]
+    },
+    {
+     "cfgId": 1240109,
+     "slot": 1,
+     "gems": [
+      221106,
+      224105
+     ]
+    },
+    {
+     "cfgId": 1340103,
+     "slot": 2,
+     "gems": [
+      221112
+     ]
+    },
+    {
+     "cfgId": 1440109,
+     "slot": 3,
+     "gems": [
+      223103,
+      224105
+     ]
+    },
+    {
+     "cfgId": 1540105,
+     "slot": 4,
+     "gems": [
+      223103
+     ]
+    },
+    {
+     "cfgId": 1640303,
+     "slot": 5,
+     "gems": [
+      221112,
+      223107
+     ]
+    },
+    {
+     "cfgId": 1740302,
+     "slot": 6,
+     "gems": [
+      222109,
+      224105
+     ]
+    },
+    {
+     "cfgId": 3040201,
+     "slot": 10,
+     "gems": [
+      222112
+     ]
+    },
+    {
+     "cfgId": 3040107,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "1HDaxLx2V48pPuLPD2T80eUkB1mmG5zjfIglsUeWVOTI",
+   "equips": [
+    {
+     "cfgId": 1140106,
+     "slot": 0,
+     "gems": [
+      224106
+     ]
+    },
+    {
+     "cfgId": 1240107,
+     "slot": 1,
+     "gems": [
+      221107
+     ]
+    },
+    {
+     "cfgId": 1340106,
+     "slot": 2,
+     "gems": [
+      224101
+     ]
+    },
+    {
+     "cfgId": 1440105,
+     "slot": 3,
+     "gems": [
+      222110
+     ]
+    },
+    {
+     "cfgId": 1540108,
+     "slot": 4,
+     "gems": [
+      221102,
+      223104
+     ]
+    },
+    {
+     "cfgId": 1640302,
+     "slot": 5,
+     "gems": [
+      222106,
+      224108
+     ]
+    },
+    {
+     "cfgId": 1740301,
+     "slot": 6,
+     "gems": [
+      221105,
+      223105
+     ]
+    },
+    {
+     "cfgId": 3040208,
+     "slot": 10,
+     "gems": [
+      221104,
+      222104
+     ]
+    },
+    {
+     "cfgId": 3040104,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "1HDaxLx2ZcYBTqUrwVVDeP9U1nVLw67CpCpBc3gBoNnc",
+   "equips": [
+    {
+     "cfgId": 1140106,
+     "slot": 0,
+     "gems": [
+      224112
+     ]
+    },
+    {
+     "cfgId": 1240107,
+     "slot": 1,
+     "gems": [
+      221112
+     ]
+    },
+    {
+     "cfgId": 1340106,
+     "slot": 2,
+     "gems": [
+      224112
+     ]
+    },
+    {
+     "cfgId": 1440105,
+     "slot": 3,
+     "gems": [
+      222102
+     ]
+    },
+    {
+     "cfgId": 1540108,
+     "slot": 4,
+     "gems": [
+      221101,
+      223101
+     ]
+    },
+    {
+     "cfgId": 1640302,
+     "slot": 5,
+     "gems": [
+      222103,
+      224101
+     ]
+    },
+    {
+     "cfgId": 1740301,
+     "slot": 6,
+     "gems": [
+      221101,
+      223101
+     ]
+    },
+    {
+     "cfgId": 3040208,
+     "slot": 10,
+     "gems": [
+      221107,
+      222102
+     ]
+    },
+    {
+     "cfgId": 3040104,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "1HDaxNck6XuMjY40sBiABHujH2IqT1sE3l0nPoaB7ubo",
+   "equips": [
+    {
+     "cfgId": 1150308,
+     "slot": 0,
+     "gems": [
+      221235,
+      222102
+     ]
+    },
+    {
+     "cfgId": 1250306,
+     "slot": 1,
+     "gems": [
+      221235
+     ]
+    },
+    {
+     "cfgId": 1350307,
+     "slot": 2,
+     "gems": [
+      221235
+     ]
+    },
+    {
+     "cfgId": 1450301,
+     "slot": 3,
+     "gems": [
+      221235
+     ]
+    },
+    {
+     "cfgId": 1550306,
+     "slot": 4,
+     "gems": [
+      222217
+     ]
+    },
+    {
+     "cfgId": 1650302,
+     "slot": 5,
+     "gems": [
+      222217,
+      224107
+     ]
+    },
+    {
+     "cfgId": 1750102,
+     "slot": 6,
+     "gems": [
+      222209,
+      224107
+     ]
+    },
+    {
+     "cfgId": 3060408,
+     "slot": 10,
+     "gems": [
+      224236,
+      221107,
+      223109
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "2nLRa3B1u5DIGAKvyHwEJDRIm",
+   "equips": [
+    {
+     "cfgId": 0,
+     "slot": 0
+    },
+    {
+     "cfgId": 0,
+     "slot": 1
+    },
+    {
+     "cfgId": 0,
+     "slot": 2
+    },
+    {
+     "cfgId": 0,
+     "slot": 3
+    },
+    {
+     "cfgId": 0,
+     "slot": 4
+    },
+    {
+     "cfgId": 0,
+     "slot": 5
+    },
+    {
+     "cfgId": 0,
+     "slot": 6
+    },
+    {
+     "cfgId": 3040209,
+     "slot": 10,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "2nLRa3B1u5DIGAKvyI14O3unQ",
+   "equips": [
+    {
+     "cfgId": 0,
+     "slot": 0
+    },
+    {
+     "cfgId": 0,
+     "slot": 1
+    },
+    {
+     "cfgId": 0,
+     "slot": 2
+    },
+    {
+     "cfgId": 0,
+     "slot": 3
+    },
+    {
+     "cfgId": 0,
+     "slot": 4
+    },
+    {
+     "cfgId": 0,
+     "slot": 5
+    },
+    {
+     "cfgId": 0,
+     "slot": 6
+    },
+    {
+     "cfgId": 3040209,
+     "slot": 10,
+     "gems": [
+      221101,
+      0
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "2nLRa3B1u5DIGAKvyI5uQdbFY",
+   "equips": [
+    {
+     "cfgId": 0,
+     "slot": 0
+    },
+    {
+     "cfgId": 0,
+     "slot": 1
+    },
+    {
+     "cfgId": 0,
+     "slot": 2
+    },
+    {
+     "cfgId": 0,
+     "slot": 3
+    },
+    {
+     "cfgId": 0,
+     "slot": 4
+    },
+    {
+     "cfgId": 0,
+     "slot": 5
+    },
+    {
+     "cfgId": 0,
+     "slot": 6
+    },
+    {
+     "cfgId": 3040209,
+     "slot": 10,
+     "gems": [
+      221102,
+      0
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "4e5Ud0HOD2INrgFlzqdTC2jtXMAVkQERXposPprvc",
+   "equips": [
+    {
+     "cfgId": 1140106,
+     "slot": 0,
+     "gems": [
+      224105
+     ]
+    },
+    {
+     "cfgId": 1240107,
+     "slot": 1,
+     "gems": [
+      221106
+     ]
+    },
+    {
+     "cfgId": 1340109,
+     "slot": 2,
+     "gems": [
+      222102,
+      223107
+     ]
+    },
+    {
+     "cfgId": 1440105,
+     "slot": 3,
+     "gems": [
+      222102
+     ]
+    },
+    {
+     "cfgId": 1540101,
+     "slot": 4,
+     "gems": [
+      221106
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      221110,
+      223103
+     ]
+    },
+    {
+     "cfgId": 1740302,
+     "slot": 6,
+     "gems": [
+      222101,
+      224105
+     ]
+    },
+    {
+     "cfgId": 3050207,
+     "slot": 10,
+     "gems": [
+      222201
+     ]
+    },
+    {
+     "cfgId": 3040104,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "4e5Ud0HOD2INrgH3c9C563C2dL0ad5A8yUmOMCg1Q",
+   "equips": [
+    {
+     "cfgId": 1140106,
+     "slot": 0,
+     "gems": [
+      224105
+     ]
+    },
+    {
+     "cfgId": 1240107,
+     "slot": 1,
+     "gems": [
+      221106
+     ]
+    },
+    {
+     "cfgId": 1340109,
+     "slot": 2,
+     "gems": [
+      222111,
+      223107
+     ]
+    },
+    {
+     "cfgId": 1440105,
+     "slot": 3,
+     "gems": [
+      222111
+     ]
+    },
+    {
+     "cfgId": 1540101,
+     "slot": 4,
+     "gems": [
+      221106
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      221110,
+      223111
+     ]
+    },
+    {
+     "cfgId": 1740302,
+     "slot": 6,
+     "gems": [
+      222101,
+      224105
+     ]
+    },
+    {
+     "cfgId": 3050207,
+     "slot": 10,
+     "gems": [
+      222246
+     ]
+    },
+    {
+     "cfgId": 3040104,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "5H68b4eFShrrHHnDjgGMStN3rDKj3U9TA96uyJKd3rfHM",
+   "equips": [
+    {
+     "cfgId": 1150108,
+     "slot": 0,
+     "gems": [
+      221236,
+      222102
+     ]
+    },
+    {
+     "cfgId": 1250107,
+     "slot": 1,
+     "gems": [
+      222205
+     ]
+    },
+    {
+     "cfgId": 1350107,
+     "slot": 2,
+     "gems": [
+      222205
+     ]
+    },
+    {
+     "cfgId": 1450105,
+     "slot": 3,
+     "gems": [
+      221236
+     ]
+    },
+    {
+     "cfgId": 1550109,
+     "slot": 4,
+     "gems": [
+      222205,
+      221106
+     ]
+    },
+    {
+     "cfgId": 1650302,
+     "slot": 5,
+     "gems": [
+      222205,
+      224105
+     ]
+    },
+    {
+     "cfgId": 1750301,
+     "slot": 6,
+     "gems": [
+      221236,
+      223107
+     ]
+    },
+    {
+     "cfgId": 3050208,
+     "slot": 10,
+     "gems": [
+      221239,
+      224105
+     ]
+    },
+    {
+     "cfgId": 3050104,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "5H68b4eFSu1HnjI9cx5edizPqp2AFeuGgnifg7dlcHq88",
+   "equips": [
+    {
+     "cfgId": 1150108,
+     "slot": 0,
+     "gems": [
+      221236,
+      222106
+     ]
+    },
+    {
+     "cfgId": 1250107,
+     "slot": 1,
+     "gems": [
+      222205
+     ]
+    },
+    {
+     "cfgId": 1350107,
+     "slot": 2,
+     "gems": [
+      222205
+     ]
+    },
+    {
+     "cfgId": 1450105,
+     "slot": 3,
+     "gems": [
+      221236
+     ]
+    },
+    {
+     "cfgId": 1550108,
+     "slot": 4,
+     "gems": [
+      221236,
+      224105
+     ]
+    },
+    {
+     "cfgId": 1650303,
+     "slot": 5,
+     "gems": [
+      221236,
+      223107
+     ]
+    },
+    {
+     "cfgId": 1750303,
+     "slot": 6,
+     "gems": [
+      221235,
+      223103
+     ]
+    },
+    {
+     "cfgId": 3050208,
+     "slot": 10,
+     "gems": [
+      221236,
+      224105
+     ]
+    },
+    {
+     "cfgId": 3050104,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "5H68cr16pGA2tJJO7daCbUyVlBFaL9YBlKNgGLtdVzbCS",
+   "equips": [
+    {
+     "cfgId": 1140104,
+     "slot": 0,
+     "gems": [
+      223107
+     ]
+    },
+    {
+     "cfgId": 1240109,
+     "slot": 1,
+     "gems": [
+      221109,
+      224105
+     ]
+    },
+    {
+     "cfgId": 1340103,
+     "slot": 2,
+     "gems": [
+      221109
+     ]
+    },
+    {
+     "cfgId": 1440108,
+     "slot": 3,
+     "gems": [
+      222102,
+      224105
+     ]
+    },
+    {
+     "cfgId": 1540105,
+     "slot": 4,
+     "gems": [
+      223107
+     ]
+    },
+    {
+     "cfgId": 1640302,
+     "slot": 5,
+     "gems": [
+      222102,
+      224106
+     ]
+    },
+    {
+     "cfgId": 1740302,
+     "slot": 6,
+     "gems": [
+      222109,
+      224105
+     ]
+    },
+    {
+     "cfgId": 3040208,
+     "slot": 10,
+     "gems": [
+      221109,
+      222102
+     ]
+    },
+    {
+     "cfgId": 3040107,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "code": "Gtf32jM0dys07GODkbCHYT2obA1GOEMHOctMFU",
+   "equips": [
+    {
+     "cfgId": 1140101,
+     "slot": 0,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1240101,
+     "slot": 1,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1340101,
+     "slot": 2,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1440101,
+     "slot": 3,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1540101,
+     "slot": 4,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 1740301,
+     "slot": 6,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 3040206,
+     "slot": 10,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "Gtf32jM0dys07GODkbCHYT2obA1GOEMMEfT2hc",
+   "equips": [
+    {
+     "cfgId": 1140101,
+     "slot": 0,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1240101,
+     "slot": 1,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1340101,
+     "slot": 2,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1440101,
+     "slot": 3,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1540101,
+     "slot": 4,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 1740301,
+     "slot": 6,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 3040207,
+     "slot": 10,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "Gtf32jM0dys07GODkbCHYT2obA1GjWSMnoRkRM",
+   "equips": [
+    {
+     "cfgId": 1140101,
+     "slot": 0,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1240101,
+     "slot": 1,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1340101,
+     "slot": 2,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1440101,
+     "slot": 3,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1540101,
+     "slot": 4,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 1740401,
+     "slot": 6,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 3040202,
+     "slot": 10,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "Gtf32jM0dys07GODkbCHYT2obA1GuAVFpLmAPQ",
+   "equips": [
+    {
+     "cfgId": 1140101,
+     "slot": 0,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1240101,
+     "slot": 1,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1340101,
+     "slot": 2,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1440101,
+     "slot": 3,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1540101,
+     "slot": 4,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 1740403,
+     "slot": 6,
+     "gems": [
+      0,
+      0
+     ]
+    },
+    {
+     "cfgId": 3040204,
+     "slot": 10,
+     "gems": [
+      0
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "Gtf32jMuOCUlxBT84FY07SD3BhdJl3xw3HW8g4",
+   "equips": [
+    {
+     "cfgId": 1140105,
+     "slot": 0,
+     "gems": [
+      222102
+     ]
+    },
+    {
+     "cfgId": 1240107,
+     "slot": 1,
+     "gems": [
+      221106
+     ]
+    },
+    {
+     "cfgId": 1340107,
+     "slot": 2,
+     "gems": [
+      222102
+     ]
+    },
+    {
+     "cfgId": 1440105,
+     "slot": 3,
+     "gems": [
+      222102
+     ]
+    },
+    {
+     "cfgId": 1540107,
+     "slot": 4,
+     "gems": [
+      222101
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      221106,
+      223107
+     ]
+    },
+    {
+     "cfgId": 1740301,
+     "slot": 6,
+     "gems": [
+      221106,
+      223107
+     ]
+    },
+    {
+     "cfgId": 3040207,
+     "slot": 10,
+     "gems": [
+      224105
+     ]
+    },
+    {
+     "cfgId": 0,
+     "slot": 11
+    }
+   ]
+  },
+  {
+   "code": "OjUJN3rcD6zJ2NpQD0Tm3913C9L4D5p0ECiAnKgDw2pODQbQwq",
+   "equips": [
+    {
+     "cfgId": 1140109,
+     "slot": 0,
+     "gems": [
+      222101,
+      224110
+     ]
+    },
+    {
+     "cfgId": 1240108,
+     "slot": 1,
+     "gems": [
+      222101,
+      223110
+     ]
+    },
+    {
+     "cfgId": 1340109,
+     "slot": 2,
+     "gems": [
+      222101,
+      223111
+     ]
+    },
+    {
+     "cfgId": 1440108,
+     "slot": 3,
+     "gems": [
+      222101,
+      224111
+     ]
+    },
+    {
+     "cfgId": 1540109,
+     "slot": 4,
+     "gems": [
+      223112,
+      224101
+     ]
+    },
+    {
+     "cfgId": 1640302,
+     "slot": 5,
+     "gems": [
+      222101,
+      224101
+     ]
+    },
+    {
+     "cfgId": 1740302,
+     "slot": 6,
+     "gems": [
+      222101,
+      224101
+     ]
+    },
+    {
+     "cfgId": 3040208,
+     "slot": 10,
+     "gems": [
+      221101,
+      222101
+     ]
+    },
+    {
+     "cfgId": 3040107,
+     "slot": 11,
+     "gems": [
+      223101
+     ]
+    }
+   ]
+  },
+  {
+   "code": "OjUJN3rcPkK9wiTYdtJT6Zage3Ry1NgHbIgbKtn6naO5vE2qsi",
+   "equips": [
+    {
+     "cfgId": 1140109,
+     "slot": 0,
+     "gems": [
+      222102,
+      224101
+     ]
+    },
+    {
+     "cfgId": 1240108,
+     "slot": 1,
+     "gems": [
+      222106,
+      223101
+     ]
+    },
+    {
+     "cfgId": 1340109,
+     "slot": 2,
+     "gems": [
+      222101,
+      223101
+     ]
+    },
+    {
+     "cfgId": 1440108,
+     "slot": 3,
+     "gems": [
+      222102,
+      224101
+     ]
+    },
+    {
+     "cfgId": 1540109,
+     "slot": 4,
+     "gems": [
+      223101,
+      224101
+     ]
+    },
+    {
+     "cfgId": 1640301,
+     "slot": 5,
+     "gems": [
+      221107,
+      223101
+     ]
+    },
+    {
+     "cfgId": 1740302,
+     "slot": 6,
+     "gems": [
+      222101,
+      224101
+     ]
+    },
+    {
+     "cfgId": 3040208,
+     "slot": 10,
+     "gems": [
+      221105,
+      222106
+     ]
+    },
+    {
+     "cfgId": 3040107,
+     "slot": 11,
+     "gems": [
+      223101
+     ]
+    }
+   ]
+  },
+  {
+   "code": "lfMC2Y3BBFc3eioZJco2xkF8TBo",
+   "equips": [
+    {
+     "cfgId": 1130104,
+     "slot": 0
+    },
+    {
+     "cfgId": 1230106,
+     "slot": 1
+    },
+    {
+     "cfgId": 1330103,
+     "slot": 2
+    },
+    {
+     "cfgId": 1430108,
+     "slot": 3,
+     "gems": [
+      223105
+     ]
+    },
+    {
+     "cfgId": 1530103,
+     "slot": 4
+    },
+    {
+     "cfgId": 1630203,
+     "slot": 5,
+     "gems": [
+      221112
+     ]
+    },
+    {
+     "cfgId": 1730103,
+     "slot": 6,
+     "gems": [
+      221112
+     ]
+    },
+    {
+     "cfgId": 3030201,
+     "slot": 10
+    },
+    {
+     "cfgId": 3030108,
+     "slot": 11,
+     "gems": [
+      0
+     ]
+    }
+   ]
+  }
+ ]
+}

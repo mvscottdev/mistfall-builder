@@ -1,0 +1,720 @@
+{
+ "about": "Inputs only. Expected outputs are in golden.json, produced by scripts/gen-golden.cjs. First 25: old parity.json inputs (flip dropped). Then: no-Target set per class; 10/12/16 Targets derived from a solved Legendary set; Top-up cap 1/3/0; Holy (empty amulet/ring); infeasible over-Budget.",
+ "scenarios": [
+  {
+   "label": "cls10-n1",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-n3",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls11-n1",
+   "input": {
+    "amuletBase": null,
+    "classId": 11,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls11-n3",
+   "input": {
+    "amuletBase": null,
+    "classId": 11,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls12-n1",
+   "input": {
+    "amuletBase": null,
+    "classId": 12,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls12-n3",
+   "input": {
+    "amuletBase": null,
+    "classId": 12,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls13-n1",
+   "input": {
+    "amuletBase": null,
+    "classId": 13,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls13-n3",
+   "input": {
+    "amuletBase": null,
+    "classId": 13,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls14-n1",
+   "input": {
+    "amuletBase": null,
+    "classId": 14,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls14-n3",
+   "input": {
+    "amuletBase": null,
+    "classId": 14,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls15-n1",
+   "input": {
+    "amuletBase": null,
+    "classId": 15,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls15-n3",
+   "input": {
+    "amuletBase": null,
+    "classId": 15,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-n5-topup",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6,
+     "3": 4,
+     "4": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 16
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-n8",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 3,
+     "1": 4,
+     "2": 5,
+     "3": 3,
+     "4": 4,
+     "5": 5,
+     "6": 3,
+     "7": 4
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls11-n8",
+   "input": {
+    "amuletBase": null,
+    "classId": 11,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 3,
+     "1": 4,
+     "2": 5,
+     "3": 3,
+     "4": 4,
+     "5": 5,
+     "6": 3,
+     "7": 4
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-q3-n2",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": 3,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-q4-n2",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": 4,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-q5-n2",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": 5,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-q6-n2",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": 6,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-q7-n2",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": 7,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "infeasible",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 999,
+     "1": 999
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-weaponBaseLock",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": 2
+   }
+  },
+  {
+   "label": "cls10-amuletRingBaseLock",
+   "input": {
+    "amuletBase": 20016604,
+    "classId": 10,
+    "quality": null,
+    "ringBase": 20017301,
+    "slotQuality": {},
+    "targets": {
+     "2": 7,
+     "3": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-slotQualityOverride",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": 3,
+    "ringBase": null,
+    "slotQuality": {
+     "weapon": 7
+    },
+    "targets": {
+     "0": 4,
+     "1": 5
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-weapon2Lock",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4
+    },
+    "topup": {
+     "perAttr": 2,
+     "total": 8
+    },
+    "weapon2Lock": 3060209,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-no-targets",
+   "input": {
+    "classId": 10,
+    "targets": {}
+   }
+  },
+  {
+   "label": "cls11-no-targets",
+   "input": {
+    "classId": 11,
+    "targets": {}
+   }
+  },
+  {
+   "label": "cls12-no-targets",
+   "input": {
+    "classId": 12,
+    "targets": {}
+   }
+  },
+  {
+   "label": "cls13-no-targets",
+   "input": {
+    "classId": 13,
+    "targets": {}
+   }
+  },
+  {
+   "label": "cls14-no-targets",
+   "input": {
+    "classId": 14,
+    "targets": {}
+   }
+  },
+  {
+   "label": "cls15-no-targets",
+   "input": {
+    "classId": 15,
+    "targets": {}
+   }
+  },
+  {
+   "label": "cls10-q6-n10-greedy",
+   "input": {
+    "classId": 10,
+    "quality": 6,
+    "targets": {
+     "0": 1,
+     "1": 1,
+     "2": 1,
+     "3": 1,
+     "4": 1,
+     "5": 1,
+     "6": 1,
+     "7": 1,
+     "8": 1,
+     "9": 1
+    }
+   }
+  },
+  {
+   "label": "cls10-q6-n12-greedy",
+   "input": {
+    "classId": 10,
+    "quality": 6,
+    "targets": {
+     "0": 1,
+     "1": 1,
+     "2": 1,
+     "3": 1,
+     "4": 1,
+     "5": 1,
+     "6": 1,
+     "7": 1,
+     "8": 1,
+     "9": 1,
+     "10": 1,
+     "11": 1
+    }
+   }
+  },
+  {
+   "label": "cls10-q6-n16-greedy",
+   "input": {
+    "classId": 10,
+    "quality": 6,
+    "targets": {
+     "0": 1,
+     "1": 1,
+     "2": 1,
+     "3": 1,
+     "4": 1,
+     "5": 1,
+     "6": 1,
+     "7": 1,
+     "8": 1,
+     "9": 1,
+     "10": 1,
+     "11": 1,
+     "12": 1,
+     "13": 1,
+     "14": 1,
+     "15": 1
+    }
+   }
+  },
+  {
+   "label": "cls10-n5-topupcap1",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6,
+     "3": 4,
+     "4": 5
+    },
+    "topup": {
+     "total": 16,
+     "perAttr": 1
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-n5-topupcap3",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6,
+     "3": 4,
+     "4": 5
+    },
+    "topup": {
+     "total": 16,
+     "perAttr": 3
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls10-n5-topup0",
+   "input": {
+    "amuletBase": null,
+    "classId": 10,
+    "quality": null,
+    "ringBase": null,
+    "slotQuality": {},
+    "targets": {
+     "0": 4,
+     "1": 5,
+     "2": 6,
+     "3": 4,
+     "4": 5
+    },
+    "topup": {
+     "total": 0,
+     "perAttr": 0
+    },
+    "weapon2Lock": null,
+    "weaponBase": null
+   }
+  },
+  {
+   "label": "cls11-q7-holy-2targets",
+   "input": {
+    "classId": 11,
+    "quality": 7,
+    "targets": {
+     "9": 1,
+     "15": 1
+    }
+   }
+  },
+  {
+   "label": "cls12-q3-over-budget",
+   "input": {
+    "classId": 12,
+    "quality": 3,
+    "targets": {
+     "0": 14,
+     "1": 14,
+     "2": 14
+    }
+   }
+  }
+ ]
+}
