@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import type { SetCodeProblem } from '../setcode/error';
 import { useT } from '../i18n/use-t';
 import { useBuild } from '../store/use-build';
@@ -15,6 +15,7 @@ export function SetCodeImport() {
   const decoded = result?.kind === 'decoded';
   // The decoded result last loaded, so the button turns into a confirmation for it.
   const [loadedFrom, setLoadedFrom] = useState<typeof result>(null);
+  const confirmation = useRef<HTMLParagraphElement>(null);
   const [code, setCode] = useState('');
   const [problem, setProblem] = useState<SetCodeProblem | null>(null);
 
@@ -61,7 +62,7 @@ export function SetCodeImport() {
         <div className="rounded-ui border border-accent/50 bg-accent/10 p-2.5 text-xs">
           <p className="mb-2">{t('decodedShown')}</p>
           {loadedFrom === result ? (
-            <p role="status" className="font-semibold text-accent">
+            <p ref={confirmation} tabIndex={-1} className="font-semibold text-accent">
               {t('loadedAsTarget')}
             </p>
           ) : (
@@ -71,6 +72,8 @@ export function SetCodeImport() {
                 onClick={() => {
                   loadAsTarget();
                   setLoadedFrom(result);
+                  // The button is replaced: focus the confirmation, so it is read out and Tab continues here.
+                  requestAnimationFrame(() => confirmation.current?.focus());
                 }}
                 className="btn-primary h-10 w-full text-sm"
               >

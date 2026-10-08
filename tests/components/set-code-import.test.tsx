@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
 import goldenRaw from '../fixtures/golden.json?raw';
 import { renderApp } from './render-app';
@@ -37,7 +37,7 @@ describe('Set code import', () => {
     expect(screen.getByLabelText('Paste a Set code')).toHaveAttribute('aria-invalid', 'true');
   });
 
-  test('Load as target makes the shown Set the inputs, with Top-up 0', () => {
+  test('Load as target makes the shown Set the inputs, with Top-up 0', async () => {
     const store = renderApp();
     paste(codeOf('cls10-weapon2Lock'));
     fireEvent.click(screen.getByRole('button', { name: 'Load as target' }));
@@ -45,6 +45,8 @@ describe('Set code import', () => {
     expect(targets.length).toBeGreaterThan(0);
     expect(locks.secondWeapon).not.toBeNull();
     expect(topUp).toEqual({ total: 0, perAttribute: 0 });
+    expect(screen.queryByRole('button', { name: 'Load as target' })).toBeNull();
+    await waitFor(() => expect(screen.getByText(/^Done: Targets and Locks/)).toHaveFocus());
     expect(
       screen.getByRole('button', { name: 'Second weapon: details and Locks, Locked' }),
     ).toBeInTheDocument();
