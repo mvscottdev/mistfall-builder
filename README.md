@@ -17,9 +17,10 @@
 ---
 
 > [!NOTE]
-> **Work in progress.** The project scaffold and game data are in place; the
-> solver and the build editor are being built. The live site shows a
-> placeholder for now.
+> **Work in progress.** The solver and the build editor work. Set code import,
+> Load as target and the Second weapon picker come next. Two looks are on
+> offer until one is chosen: **Forge** and **Mist** (switch in the header, or
+> add `?design=forge` / `?design=mist` to the URL).
 
 ## ✨ What it does
 
