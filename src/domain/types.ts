@@ -143,3 +143,46 @@ export interface Catalogue {
   /** `YYYY-MM-DD` of prices.json. */
   pricesUpdatedAt: string;
 }
+
+/** The user's wanted final level for one Attribute (Items + Top-up ≥ level). */
+export interface Target {
+  attribute: AttributeId;
+  level: number;
+}
+
+/** Extra levels on top of Items: a total pool and a cap per targeted Attribute. */
+export interface TopUp {
+  total: number;
+  perAttribute: number;
+}
+
+/** User constraints on the Set. null = not locked. */
+export interface Locks {
+  /** Quality of the whole Set. */
+  quality: QualityId | null;
+  /** Per-Slot quality override; wins over `quality`. */
+  slotQuality: Partial<Record<Slot, QualityId>>;
+  weaponType: number | null;
+  amuletBase: number | null;
+  ringBase: number | null;
+  /** Exact Item id for the Second weapon. */
+  secondWeapon: number | null;
+}
+
+/** One Item of a Set with the Gem in each Mod slot (null at Built-in effects and empty Sockets). */
+export interface SetPiece {
+  slot: SetSlot;
+  itemId: number;
+  gemIds: (number | null)[];
+}
+
+/** The cheapest Set the solver found. */
+export interface SolvedSet {
+  /** Gold for every Item and Gem, Second weapon included. */
+  cost: number;
+  /** One per active Slot in Slot order, then the Second weapon. */
+  pieces: SetPiece[];
+  /** Top-up spent per Attribute; only Attributes that got some. */
+  topUp: Record<AttributeId, number>;
+  topUpUsed: number;
+}
