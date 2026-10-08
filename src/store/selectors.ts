@@ -10,7 +10,7 @@ import type {
   ShapeId,
   Slot,
 } from '../domain/types';
-import { budget } from '../solver/budget';
+import { budget, targetLevelCap } from '../solver/budget';
 import type { BuildState } from './build-store';
 import { sameInputs } from './inputs';
 import { loadedInputs } from './load-as-target';
@@ -74,6 +74,10 @@ export function selectBudget(state: BuildState): number {
   }
   return budgetFor.value;
 }
+
+/** Highest level the "+" on a Target goes to: the Budget plus the wine per bonus. */
+export const selectTargetLevelCap = (state: BuildState): number =>
+  targetLevelCap(selectBudget(state), state.inputs.topUp);
 
 /** The Lock a Slot's base picker sets, if it has one. */
 export type BaseLock = 'weaponType' | 'amuletBase' | 'ringBase';

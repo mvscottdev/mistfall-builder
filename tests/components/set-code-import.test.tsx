@@ -30,6 +30,16 @@ describe('Set code import', () => {
     expect(screen.queryByText('Inputs changed — recalculate')).toBeNull();
   });
 
+  test('each tile names what its Built-in effects and Gems give', () => {
+    renderApp();
+    paste(codeOf('cls11-n1'));
+    const lines = within(screen.getByRole('button', { name: /^Weapon: details/ })).getAllByRole(
+      'listitem',
+    );
+    expect(lines.length).toBeGreaterThan(0);
+    for (const line of lines) expect(line).toHaveTextContent(/(Built-in|Socket):\D+\+\d+$/);
+  });
+
   test('text that is not a Set code says so', () => {
     renderApp();
     paste('hello world');

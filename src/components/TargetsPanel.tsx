@@ -1,16 +1,18 @@
 import { AnimatePresence } from 'motion/react';
 import { useT } from '../i18n/use-t';
-import { selectAttributeById, selectBudget } from '../store/selectors';
+import { selectAttributeById, selectBudget, selectTargetLevelCap } from '../store/selectors';
 import { useBuild } from '../store/use-build';
 import { TargetPickerGrid } from './TargetPickerGrid';
 import { TargetRow } from './TargetRow';
 
-/** The Targets: an icon grid to pick them, their rows, and the Budget they share. */
+/** The Targets: an icon grid to pick them, their rows, and the Budget plus wine they share. */
 export function TargetsPanel() {
   const t = useT();
   const byId = useBuild(selectAttributeById);
   const targets = useBuild((state) => state.inputs.targets);
   const budget = useBuild(selectBudget);
+  const levelCap = useBuild(selectTargetLevelCap);
+  const wine = useBuild((state) => state.inputs.topUp.total);
   const requested = targets.reduce((sum, target) => sum + target.level, 0);
 
   return (
@@ -37,7 +39,7 @@ export function TargetsPanel() {
                   key={target.attribute}
                   attribute={attribute}
                   level={target.level}
-                  budget={budget}
+                  max={levelCap}
                 />
               ) : null;
             })}
@@ -45,8 +47,10 @@ export function TargetsPanel() {
         </ul>
       )}
 
-      <p className={`text-xs tabular-nums ${requested > budget ? 'text-danger' : 'text-muted'}`}>
-        {t('budgetLeft', { used: requested, budget })}
+      <p
+        className={`text-xs tabular-nums ${requested > budget + wine ? 'text-danger' : 'text-muted'}`}
+      >
+        {t('budgetLeft', { used: requested, max: budget + wine, budget, wine })}
       </p>
     </section>
   );

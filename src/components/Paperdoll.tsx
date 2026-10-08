@@ -8,7 +8,7 @@ import { GameIcon } from './GameIcon';
 import { SlotDrawer } from './SlotDrawer';
 import { SlotTile } from './SlotTile';
 
-/** Phone order (3×3 grid); from md up each tile takes its named area around the figure. */
+/** Phone order (2 columns, 3 from sm); from md up each tile takes its named area around the figure. */
 const SLOTS: SetSlot[] = [
   'helmet',
   'chest',
@@ -58,7 +58,7 @@ export function Paperdoll() {
   return (
     <section aria-label={cls ? local(cls.name) : undefined} className="relative">
       <div
-        className={`grid grid-cols-3 gap-2 transition-opacity duration-200 sm:gap-3 md:grid-cols-[1fr_1.25fr_1fr] md:[grid-template-areas:'helmet_figure_amulet'_'chest_figure_ring'_'bracers_figure_weapon'_'pants_boots_weapon2'] ${
+        className={`grid grid-cols-2 gap-2 transition-opacity duration-200 sm:grid-cols-3 sm:gap-3 md:grid-cols-[1fr_1.25fr_1fr] md:[grid-template-areas:'helmet_figure_amulet'_'chest_figure_ring'_'bracers_figure_weapon'_'pants_boots_weapon2'] ${
           outdated ? 'opacity-85 saturate-50' : ''
         }`}
       >
