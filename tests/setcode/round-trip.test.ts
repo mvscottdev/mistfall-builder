@@ -69,6 +69,8 @@ describe('Set code round trip', () => {
   });
 
   test('a code containing an Item without a Price still decodes', () => {
+    // No golden or game code holds an unpriced Item (under the page prices),
+    // so the code is made here.
     const unpriced = catalogue.items.find((i) => i.price === null);
     expect(unpriced).toBeDefined();
     const item = unpriced as Item;

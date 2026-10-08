@@ -79,14 +79,15 @@ describe('Set code format', () => {
   });
 
   test('encoding reports Items and Gems without a code index instead of writing a code', () => {
-    const helmet = itemById(1130106);
+    const helmet = itemById(1130108);
     const noIndex = { ...helmet, codeIndex: 0 };
     const socketAt = helmet.modSlots.findIndex((m) => m.kind === 'socket');
+    expect(socketAt).toBeGreaterThanOrEqual(0);
     const gems = helmet.modSlots.map((_, i) => (i === socketAt ? { codeIndex: 0 } : null));
     expect(encodeSet(layout, 10, [{ slot: 'helmet', item: noIndex, gems }])).toEqual({
       missing: [
         { slot: 'helmet', what: 'item' },
-        ...(socketAt >= 0 ? [{ slot: 'helmet', what: 'gem' }] : []),
+        { slot: 'helmet', what: 'gem' },
       ],
     });
   });
