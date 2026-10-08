@@ -7,7 +7,7 @@ import type { ShownPiece } from '../store/shown-set';
 import { useBuild } from '../store/use-build';
 import { GameIcon } from './GameIcon';
 import { formatGold, itemName } from './item-name';
-import { SocketIcon } from './SocketIcon';
+import { PieceMods } from './PieceMods';
 
 // Static strings so Tailwind sees them: each Slot's place around the figure.
 const AREA: Record<SetSlot, string> = {
@@ -22,7 +22,7 @@ const AREA: Record<SetSlot, string> = {
   weapon2: 'md:[grid-area:weapon2]',
 };
 
-/** One Slot on the doll: the Item's art in its quality colour, Gems, price and Lock mark. */
+/** One Slot on the doll: the Item's art in its quality colour, what its Mod slots give, price and Lock mark. */
 export function SlotTile({
   slot,
   piece,
@@ -82,15 +82,9 @@ export function SlotTile({
           >
             {itemName(item, quality?.name, labels[slot], language)}
           </span>
-          <span className="slot-meta flex items-center gap-1">
-            {item.modSlots.map((mod, i) =>
-              mod.kind === 'socket' ? (
-                <SocketIcon key={i} socket={mod} gem={piece.gems[i] ?? null} className="size-5" />
-              ) : null,
-            )}
-            <span className="text-xs text-muted tabular-nums">
-              {piece.price === null ? '—' : formatGold(piece.price, language)}
-            </span>
+          <PieceMods piece={piece} />
+          <span className="slot-meta mt-auto text-xs text-muted tabular-nums">
+            {piece.price === null ? '—' : formatGold(piece.price, language)}
           </span>
         </>
       )}

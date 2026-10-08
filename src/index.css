@@ -195,7 +195,8 @@ body {
     grid-template-areas:
       'label label'
       'art name'
-      'art meta';
+      'art meta'
+      'mods mods';
     align-items: center;
     column-gap: 0.75rem;
     text-align: left;
@@ -214,6 +215,9 @@ body {
   [data-design='mist'] .slot-meta {
     grid-area: meta;
     align-self: start;
+  }
+  [data-design='mist'] .slot-mods {
+    grid-area: mods;
   }
 }
 
