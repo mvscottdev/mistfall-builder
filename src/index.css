@@ -218,8 +218,9 @@ body {
 }
 
 [data-design='mist'] .panel {
-  /* No backdrop-filter: it would trap fixed overlays (drawer, Codex sheet) inside the panel. */
-  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  /* Traps fixed descendants inside the panel: overlays render into <body> (SlotDrawer). */
+  backdrop-filter: blur(10px);
   box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.8);
 }
 
