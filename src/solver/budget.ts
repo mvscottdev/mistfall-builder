@@ -1,4 +1,4 @@
-import type { Catalogue, ClassId, Contribution, Locks, ModSlot } from '../domain/types';
+import type { Catalogue, ClassId, Contribution, Locks, ModSlot, TopUp } from '../domain/types';
 import { slotCandidates } from './candidates';
 import { fittingGems } from './mod-options';
 
@@ -25,4 +25,9 @@ export function budget(catalogue: Catalogue, classId: ClassId, locks: Locks): nu
     );
   }
   return sum;
+}
+
+/** Highest level one Target can reach: the Budget plus the wine one Attribute may take. */
+export function targetLevelCap(budgetPoints: number, topUp: TopUp): number {
+  return budgetPoints + Math.min(topUp.perAttribute, topUp.total);
 }

@@ -6,15 +6,15 @@ import { AttributeGlyph } from './AttributeGlyph';
 import { Stepper } from './Stepper';
 import { TierList } from './TierList';
 
-/** One Target: the Attribute, a level stepper capped at the Budget, and its tiers. */
+/** One Target: the Attribute, a level stepper capped at the Budget plus wine, and its tiers. */
 export function TargetRow({
   attribute,
   level,
-  budget,
+  max,
 }: {
   attribute: Attribute;
   level: number;
-  budget: number;
+  max: number;
 }) {
   const t = useT();
   const local = useLocalized();
@@ -38,7 +38,7 @@ export function TargetRow({
         <Stepper
           value={level}
           min={1}
-          max={budget}
+          max={max}
           onChange={(value) => setTargetLevel(attribute.id, value)}
           label={t('levelOf', { name })}
           lowerLabel={t('lowerLevel', { name })}

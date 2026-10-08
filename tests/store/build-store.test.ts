@@ -71,11 +71,19 @@ describe('Targets', () => {
     expect(state().inputs.targets).toEqual([]);
   });
 
-  test('a level above the Budget is capped at the Budget', () => {
+  test('a level above the Budget is capped at the Budget plus the wine per bonus', () => {
     const { classId, locks } = state().inputs;
     state().addTarget(5);
     state().setTargetLevel(5, 999);
-    expect(state().inputs.targets[0]?.level).toBe(budget(catalogue, classId, locks));
+    expect(state().inputs.targets[0]?.level).toBe(budget(catalogue, classId, locks) + 2);
+  });
+
+  test('the wine per bonus counts only up to the wine total', () => {
+    const { classId, locks } = state().inputs;
+    state().setTopUp({ total: 1, perAttribute: 2 });
+    state().addTarget(5);
+    state().setTargetLevel(5, 999);
+    expect(state().inputs.targets[0]?.level).toBe(budget(catalogue, classId, locks) + 1);
   });
 
   test('removing a Target leaves the others', () => {

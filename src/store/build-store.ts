@@ -12,7 +12,7 @@ import { initialLanguage, saveLanguage, type Language } from '../i18n/language';
 import { decodeSetCode } from '../setcode/decode';
 import { SetCodeError, type SetCodeProblem } from '../setcode/error';
 import type { DecodedSet } from '../setcode/types';
-import { budget } from '../solver/budget';
+import { budget, targetLevelCap } from '../solver/budget';
 import { solve, type SolveOutcome } from '../solver/solve';
 import { locksForClass } from './class-locks';
 import { defaultInputs, type Inputs } from './inputs';
@@ -40,7 +40,7 @@ export interface BuildState {
   setClass: (classId: ClassId) => void;
   /** Adds a Target at level 1 after the others; no-op if the Attribute is already targeted. */
   addTarget: (attribute: AttributeId) => void;
-  /** Level 0 or less removes the Target; the level is capped at the Budget. */
+  /** Level 0 or less removes the Target; the level is capped at the Budget plus the wine per bonus. */
   setTargetLevel: (attribute: AttributeId, level: number) => void;
   removeTarget: (attribute: AttributeId) => void;
   setTopUp: (topUp: TopUp) => void;
@@ -90,10 +90,9 @@ export function createBuildStore(catalogue: Catalogue) {
       },
 
       setTargetLevel: (attribute, level) => {
-        const { targets, classId, locks } = get().inputs;
+        const { targets, classId, locks, topUp } = get().inputs;
         if (level <= 0) return get().removeTarget(attribute);
-        // As the old page: never above the Budget; Top-up is not counted here.
-        const capped = Math.min(level, budget(catalogue, classId, locks));
+        const capped = Math.min(level, targetLevelCap(budget(catalogue, classId, locks), topUp));
         setInputs({
           targets: targets.map((t) =>
             t.attribute === attribute ? { attribute, level: capped } : t,

@@ -2,6 +2,7 @@ import { act, cleanup, fireEvent, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { solve, type SolveOutcome } from '../../src/solver/solve';
 import { renderApp } from './render-app';
+import { selectBudget } from '../../src/store/selectors';
 
 vi.mock('../../src/solver/solve', () => ({ solve: vi.fn() }));
 const solveMock = vi.mocked(solve);
@@ -79,17 +80,29 @@ describe('Targets', () => {
     expect(screen.getByRole('button', { name: 'Wrath', pressed: true })).toBeInTheDocument();
   });
 
-  test('+ is disabled at the Budget', () => {
+  test('+ is disabled at the Budget plus the wine per bonus', () => {
     const store = renderApp();
     addTarget('Wrath');
-    const budget = Number(/of (\d+)/.exec(screen.getByText(/Item budget/).textContent ?? '')?.[1]);
+    const budget = selectBudget(store.getState()) + 2;
     act(() => store.getState().setTargetLevel(0, budget));
     expect(screen.getByRole('button', { name: 'Raise level: Wrath' })).toBeDisabled();
     act(() => store.getState().setTargetLevel(0, budget - 1));
     expect(screen.getByRole('button', { name: 'Raise level: Wrath' })).toBeEnabled();
   });
 
-  test('a typed level is applied on Enter, clamped to the Budget, and the field can be cleared first', () => {
+  test('the levels line counts the wine and turns red only above Budget + wine', () => {
+    const store = renderApp();
+    addTarget('Wrath');
+    const budget = selectBudget(store.getState());
+    act(() => store.getState().setTargetLevel(0, budget + 2));
+    const line = screen.getByText(/^Levels asked/);
+    expect(line).toHaveTextContent(
+      `Levels asked: ${budget + 2} of ${budget + 8} (${budget} from Items + 8 wine)`,
+    );
+    expect(line).not.toHaveClass('text-danger');
+  });
+
+  test('a typed level is applied on Enter, clamped to the Budget plus wine, and the field can be cleared first', () => {
     const store = renderApp();
     addTarget('Wrath');
     const field = screen.getByRole('textbox', { name: 'Level: Wrath' });
@@ -100,8 +113,7 @@ describe('Targets', () => {
     expect(store.getState().inputs.targets).toEqual([{ attribute: 0, level: 3 }]);
     fireEvent.change(field, { target: { value: '999' } });
     fireEvent.blur(field);
-    const budget = Number(/of (\d+)/.exec(screen.getByText(/Item budget/).textContent ?? '')?.[1]);
-    expect(store.getState().inputs.targets[0]?.level).toBe(budget);
+    expect(store.getState().inputs.targets[0]?.level).toBe(selectBudget(store.getState()) + 2);
   });
 
   test('a cleared level field goes back to the level on blur', () => {
@@ -170,12 +182,12 @@ describe('Calculate', () => {
     expect(weapon).toHaveTextContent('Sword and Shield');
   });
 
-  test('Targets over Budget + Top-up give a message, not a Set', async () => {
+  test('Targets over Budget + wine give a message, not a Set', async () => {
     solveMock.mockResolvedValue({ kind: 'overBudget', requested: 40, budget: 30, topUpTotal: 8 });
     renderApp();
     await act(async () => fireEvent.click(calculateButton()));
     expect(screen.getByRole('alert')).toHaveTextContent(
-      'Targets ask for 40 levels; the set gives at most 30 + 8 Top-up.',
+      'Targets ask for 40 levels; the set gives at most 30 + 8 wine.',
     );
   });
 

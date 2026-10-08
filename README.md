@@ -30,7 +30,7 @@ you there. It runs entirely in your browser: no server, no account, no tracking.
 |---|---|
 | 🎯 **Targets** | Ask for any of the 32 set bonuses at any level. Tier thresholds are shown as you go. |
 | 💰 **Cheapest set** | An exact optimiser (mixed-integer programming via [HiGHS](https://highs.dev/)) finds the minimum-cost set, not just a good one. |
-| ➕ **Top-up** | Accounts for extra levels you can add on top of items, and uses them only when they save gold. |
+| 🍷 **Wine** | Accounts for extra levels wine adds on top of items, and uses them only when they save gold. |
 | 🔒 **Locks** | Fix quality for the whole set or per slot, a weapon type, or the amulet/ring base. |
 | 🗡️ **Second weapon** | Pick an off-hand base and quality, or leave it to the cheapest option. |
 | 🔗 **Set codes** | Copy the result as an in-game import code, or paste a code to see its set and load it as your targets. |
@@ -44,7 +44,7 @@ flowchart LR
     A[catalogue.json<br/>items · gems · attributes] --> C[Price join<br/>low ?? avg]
     B[prices.json<br/>dated snapshot] --> C
     C --> D[Candidate variants<br/>per slot]
-    U[Your targets<br/>+ locks + top-up] --> D
+    U[Your targets<br/>+ locks + wine] --> D
     D --> E[HiGHS MIP solver<br/>in a Web Worker]
     E --> F[Cheapest set<br/>+ set code]
 ```
@@ -65,8 +65,8 @@ flowchart LR
 | **Socket** | An empty mod slot with a shape; it takes a gem of the matching family. |
 | **Attribute** | One of 32 set bonuses. Its level is the sum of contributions across the set. |
 | **Target** | The final level you want for an attribute (overshooting is allowed). |
-| **Top-up** | Extra levels added on top of items: a total pool plus a per-attribute cap. |
-| **Budget** | The most levels the items can give for your class and locks; caps each target. |
+| **Wine** (вино) | Extra levels added on top of items: a total pool plus a per-attribute cap. |
+| **Budget** | The most levels the items can give for your class and locks; plus the wine per bonus, it caps each target. |
 | **Lock** | A constraint you set on quality, weapon type or jewellery base; the second weapon has its own type and quality locks. |
 | **Set code** | The game's import string for a full set. |
 
