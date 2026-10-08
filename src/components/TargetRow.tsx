@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import type { Attribute } from '../domain/types';
 import { useLocalized, useT } from '../i18n/use-t';
 import { useBuild } from '../store/use-build';
-import { AttributeIcon } from './AttributeIcon';
+import { AttributeGlyph } from './AttributeGlyph';
 import { Stepper } from './Stepper';
 import { TierList } from './TierList';
 
@@ -31,7 +31,7 @@ export function TargetRow({
       className="rounded-ui border border-line bg-panel-2/60 p-2.5"
     >
       <div className="flex items-center gap-2">
-        <AttributeIcon attribute={attribute} className="size-8" />
+        <AttributeGlyph attribute={attribute} className="size-9" />
         <span className="min-w-0 flex-1 truncate font-medium" title={local(attribute.description)}>
           {name}
         </span>

@@ -218,7 +218,90 @@ body {
 }
 
 [data-design='mist'] .panel {
-  background: color-mix(in srgb, var(--panel) 82%, transparent);
-  backdrop-filter: blur(10px);
+  /* No backdrop-filter: it would trap fixed overlays (drawer, Codex sheet) inside the panel. */
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
   box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.8);
+}
+
+/* An Attribute badge: glyph in a frame tinted by category; hexagon in Forge, rounded in Mist. */
+:root {
+  --cat-offense: #b4483a;
+  --cat-defense: #3f72ad;
+  --cat-utility: #a8773a;
+  --glyph-shape: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+}
+
+@layer components {
+  .glyph {
+    --c: var(--line-strong);
+    position: relative;
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    aspect-ratio: 1;
+    transition: filter 150ms;
+  }
+  .glyph[data-category='offense'] {
+    --c: var(--cat-offense);
+  }
+  .glyph[data-category='defense'] {
+    --c: var(--cat-defense);
+  }
+  .glyph[data-category='utility'] {
+    --c: var(--cat-utility);
+  }
+  .glyph-frame,
+  .glyph-frame::after {
+    position: absolute;
+    clip-path: var(--glyph-shape);
+  }
+  .glyph-frame {
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--c) 70%, white),
+      color-mix(in srgb, var(--c) 60%, black)
+    );
+  }
+  .glyph-frame::after {
+    content: '';
+    inset: 2px;
+    background: radial-gradient(
+      circle at 50% 30%,
+      color-mix(in srgb, var(--c) 70%, black),
+      color-mix(in srgb, var(--c) 22%, #0b0a09) 75%
+    );
+  }
+  .glyph[data-selected='true'] {
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 70%, transparent));
+  }
+  .glyph[data-selected='true'] .glyph-frame {
+    background: linear-gradient(160deg, #fff1c4, var(--accent) 45%, #6b4708);
+  }
+  [data-design='mist'] .glyph-frame,
+  [data-design='mist'] .glyph-frame::after {
+    clip-path: none;
+    border-radius: 32%;
+  }
+  [data-design='mist'] .glyph-frame::after {
+    border-radius: 28%;
+  }
+  [data-design='mist'] .glyph[data-selected='true'] .glyph-frame {
+    background: linear-gradient(160deg, #d9f6ff, var(--accent) 50%, #1d5767);
+  }
+  .glyph-badge {
+    position: absolute;
+    right: -0.3rem;
+    bottom: -0.2rem;
+    min-width: 1.15rem;
+    padding: 0 0.25rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.15rem;
+    text-align: center;
+    box-shadow: 0 0 0 2px var(--panel);
+  }
 }
