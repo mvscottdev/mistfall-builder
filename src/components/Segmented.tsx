@@ -37,7 +37,7 @@ export function Segmented<T extends string | number | null>({
             aria-label={option.title}
             title={option.title}
             onClick={() => onChange(option.value)}
-            className={`min-h-8 rounded-[calc(var(--radius)-2px)] px-2.5 text-sm transition-colors ${
+            className={`min-h-10 rounded-[calc(var(--radius)-2px)] px-2.5 text-sm transition-colors md:min-h-8 ${
               pressed ? 'bg-line-strong text-text' : 'text-muted hover:text-text'
             }`}
           >

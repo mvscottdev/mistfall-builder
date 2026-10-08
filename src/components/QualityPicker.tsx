@@ -33,7 +33,7 @@ export function QualityPicker() {
                   className="size-2.5 rounded-full"
                   style={{ background: q.color }}
                 />
-                <span className="hidden sm:inline lg:hidden xl:inline">{local(q.name)}</span>
+                <span>{local(q.name)}</span>
               </span>
             ),
           })),

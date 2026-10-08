@@ -28,9 +28,9 @@ export function App() {
       reducedMotion="user"
       transition={reduce ? { duration: 0 } : { duration: 0.2, ease: 'easeOut' }}
     >
-      <div className="mx-auto flex min-h-screen max-w-[90rem] flex-col gap-4 px-4 pt-4 pb-24 sm:px-6 md:pb-6 lg:pt-6">
+      <div className="mx-auto flex min-h-screen max-w-[90rem] flex-col gap-4 px-4 pt-4 pb-24 sm:px-6 xl:pb-6 lg:pt-6">
         <Header design={design} onDesign={setDesign} />
-        <main className="grid items-start gap-4 md:grid-cols-[minmax(18rem,22rem)_1fr] xl:grid-cols-[minmax(19rem,23rem)_1fr_minmax(17rem,20rem)]">
+        <main className="grid grid-cols-1 items-start gap-4 md:grid-cols-[minmax(18rem,22rem)_1fr] xl:grid-cols-[minmax(19rem,23rem)_1fr_minmax(17rem,20rem)]">
           <aside className="panel space-y-5 p-4 md:row-span-2 xl:row-span-1">
             <ClassPicker />
             <QualityPicker />

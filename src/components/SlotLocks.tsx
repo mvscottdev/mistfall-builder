@@ -4,7 +4,7 @@ import { BASE_LOCK, baseOf, selectBaseOptions, selectQualities } from '../store/
 import { useBuild } from '../store/use-build';
 import { Segmented } from './Segmented';
 
-/** A main Slot's quality override and, where the Slot has 2+ bases, its base Lock. */
+/** A main Slot's quality override and, where the Slot has 2+ bases, its weapon type or base Lock. */
 export function SlotLocks({ slot }: { slot: Slot }) {
   const t = useT();
   const local = useLocalized();
@@ -15,6 +15,8 @@ export function SlotLocks({ slot }: { slot: Slot }) {
   const baseLock = BASE_LOCK[slot];
   const bases = useBuild(selectBaseOptions(slot));
   const lockedBase = useBuild((state) => (baseLock ? state.inputs.locks[baseLock] : null));
+  // Base stats of the locked base, shown under the picker (option tooltips rarely show).
+  const chosen = bases.find((item) => baseOf(item) === lockedBase);
 
   return (
     <div className="space-y-4">
@@ -39,7 +41,7 @@ export function SlotLocks({ slot }: { slot: Slot }) {
       {baseLock && bases.length >= 2 && (
         <label className="block">
           <span className="mb-2 block text-xs font-medium tracking-wider text-muted uppercase">
-            {t('baseLock')}
+            {t(baseLock === 'weaponType' ? 'weaponTypeLock' : 'baseLock')}
           </span>
           <select
             value={lockedBase ?? ''}
@@ -50,17 +52,20 @@ export function SlotLocks({ slot }: { slot: Slot }) {
           >
             <option value="">{t('anyBase')}</option>
             {bases.map((item) => (
-              <option
-                key={baseOf(item)}
-                value={baseOf(item)}
-                title={Object.entries(item.baseStats ?? {})
-                  .map(([stat, value]) => `${stat}: ${value}`)
-                  .join(', ')}
-              >
+              <option key={baseOf(item)} value={baseOf(item)}>
                 {item.baseName ? local(item.baseName) : String(baseOf(item))}
               </option>
             ))}
           </select>
+          {chosen?.baseStats && (
+            <span className="mt-2 flex flex-wrap gap-1.5">
+              {Object.entries(chosen.baseStats).map(([stat, n]) => (
+                <span key={stat} className="rounded-ui bg-panel-2 px-2 py-0.5 text-xs text-muted">
+                  {stat} <span className="text-text tabular-nums">{n}</span>
+                </span>
+              ))}
+            </span>
+          )}
         </label>
       )}
     </div>

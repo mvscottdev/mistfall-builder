@@ -49,7 +49,7 @@ export function TargetRow({
           type="button"
           aria-label={t('removeTarget', { name })}
           onClick={() => removeTarget(attribute.id)}
-          className="grid size-8 place-items-center rounded-ui text-muted transition-colors hover:bg-panel hover:text-danger"
+          className="grid size-10 place-items-center rounded-ui text-muted md:size-8 transition-colors hover:bg-panel hover:text-danger"
         >
           ✕
         </button>

@@ -22,7 +22,7 @@ export function ClassPicker() {
           return (
             <label
               key={cls.id}
-              className={`group flex cursor-pointer flex-col items-center gap-1 rounded-ui border px-1 py-2 text-center text-xs transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent ${
+              className={`group flex min-w-0 cursor-pointer flex-col items-center gap-1 rounded-ui border px-1 py-2 text-center text-xs transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent ${
                 checked
                   ? 'border-accent bg-panel-2 text-text'
                   : 'border-line text-muted hover:border-line-strong hover:text-text'
@@ -39,7 +39,9 @@ export function ClassPicker() {
                 id={cls.iconId}
                 className={`size-8 transition-opacity ${checked ? 'opacity-100' : 'opacity-60 group-hover:opacity-90'}`}
               />
-              <span className="leading-tight">{local(cls.name)}</span>
+              <span className="max-w-full leading-tight break-words hyphens-auto">
+                {local(cls.name)}
+              </span>
             </label>
           );
         })}

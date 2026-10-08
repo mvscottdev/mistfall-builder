@@ -53,7 +53,7 @@ describe('layout', () => {
         screen.getByRole('button', { name: `${slot}: details and Locks` }),
       ).toBeInTheDocument();
     }
-    expect(screen.getByText('Prices from 2026-08-20')).toBeInTheDocument();
+    expect(screen.getAllByText('Prices from 2026-08-20').length).toBeGreaterThan(0);
   });
 
   test('UI text and the page language follow the chosen language', () => {
@@ -88,6 +88,31 @@ describe('Targets', () => {
     expect(screen.getByRole('button', { name: 'Raise level: Wrath' })).toBeDisabled();
     act(() => store.getState().setTargetLevel(0, budget - 1));
     expect(screen.getByRole('button', { name: 'Raise level: Wrath' })).toBeEnabled();
+  });
+
+  test('a typed level is applied on Enter, clamped to the Budget, and the field can be cleared first', () => {
+    const store = renderApp();
+    addTarget('Wrath');
+    const field = screen.getByRole('textbox', { name: 'Level: Wrath' });
+    fireEvent.change(field, { target: { value: '' } });
+    expect(field).toHaveValue('');
+    fireEvent.change(field, { target: { value: '3' } });
+    fireEvent.keyDown(field, { key: 'Enter' });
+    expect(store.getState().inputs.targets).toEqual([{ attribute: 0, level: 3 }]);
+    fireEvent.change(field, { target: { value: '999' } });
+    fireEvent.blur(field);
+    const budget = Number(/of (\d+)/.exec(screen.getByText(/Item budget/).textContent ?? '')?.[1]);
+    expect(store.getState().inputs.targets[0]?.level).toBe(budget);
+  });
+
+  test('a cleared level field goes back to the level on blur', () => {
+    const store = renderApp();
+    addTarget('Wrath');
+    const field = screen.getByRole('textbox', { name: 'Level: Wrath' });
+    fireEvent.change(field, { target: { value: '' } });
+    fireEvent.blur(field);
+    expect(field).toHaveValue('1');
+    expect(store.getState().inputs.targets).toEqual([{ attribute: 0, level: 1 }]);
   });
 
   test('✕ removes the Target', () => {

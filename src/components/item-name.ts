@@ -14,7 +14,7 @@ export function itemName(
   return quality ? `${quality[language]} · ${slotLabel[language]}` : slotLabel[language];
 }
 
-/** Gold as the game writes it: 1 234. */
+/** Gold with the language's digit grouping: 1 234 in RU, 1,234 in EN. */
 export function formatGold(gold: number, language: keyof Localized): string {
   return gold.toLocaleString(language === 'ru' ? 'ru-RU' : 'en-US');
 }

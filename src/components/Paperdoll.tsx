@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'motion/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Locks, SetSlot } from '../domain/types';
 import { useLocalized } from '../i18n/use-t';
 import { BASE_LOCK, selectClasses, selectShownSet, selectStale } from '../store/selectors';
@@ -38,16 +38,22 @@ export function Paperdoll() {
   const [open, setOpen] = useState<SetSlot | null>(null);
   const opener = useRef<HTMLElement | null>(null);
 
-  const close = () => {
-    setOpen(null);
-    opener.current?.focus();
-  };
+  // While the drawer is open the page behind it is inert; focus goes back once it has left.
+  useEffect(() => {
+    const page = opener.current?.closest<HTMLElement>('body > *');
+    if (!page || open === null) return;
+    page.inert = true;
+    return () => {
+      page.inert = false;
+    };
+  }, [open]);
+  const close = () => setOpen(null);
 
   return (
     <section aria-label={cls ? local(cls.name) : undefined} className="relative">
       <div
         className={`grid grid-cols-3 gap-2 transition-opacity duration-200 sm:gap-3 md:grid-cols-[1fr_1.25fr_1fr] md:[grid-template-areas:'helmet_figure_amulet'_'chest_figure_ring'_'bracers_figure_weapon'_'pants_boots_weapon2'] ${
-          stale && shown ? 'opacity-60' : ''
+          stale && shown ? 'opacity-85 saturate-50' : ''
         }`}
       >
         {cls && (
@@ -79,7 +85,7 @@ export function Paperdoll() {
           />
         ))}
       </div>
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => opener.current?.focus()}>
         {open && (
           <SlotDrawer
             key={open}

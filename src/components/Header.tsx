@@ -24,9 +24,12 @@ export function Header({
           {t('appTitle')}
         </h1>
         <p className="text-sm text-muted">{t('tagline')}</p>
+        <p className="text-xs text-muted sm:hidden">
+          <time dateTime={pricesUpdatedAt}>{t('pricesFrom', { date: pricesUpdatedAt })}</time>
+        </p>
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="control px-2.5 py-1.5 text-xs text-muted">
+        <span className="control hidden px-2.5 py-1.5 text-xs text-muted sm:inline">
           <time dateTime={pricesUpdatedAt}>{t('pricesFrom', { date: pricesUpdatedAt })}</time>
         </span>
         <Segmented

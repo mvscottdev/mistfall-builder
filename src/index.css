@@ -187,8 +187,8 @@ body {
   }
 }
 
-/* Mist: from md up, side tiles read as cards with the art on the left. */
-@media (width >= 48rem) {
+/* Mist: from xl up, where tiles are wide enough, they read as cards with the art on the left. */
+@media (width >= 80rem) {
   [data-design='mist'] .slot-tile {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);

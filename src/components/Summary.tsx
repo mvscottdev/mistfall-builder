@@ -19,7 +19,7 @@ export function Summary() {
 
   return (
     <section aria-label={t('totalCost')} className="space-y-4">
-      <div aria-live="polite" aria-busy={busy}>
+      <div aria-busy={busy}>
         <p className="text-xs font-medium tracking-wider text-muted uppercase">{t('totalCost')}</p>
         <p className="flex items-baseline gap-2">
           <span className="font-display text-4xl font-semibold text-accent">
@@ -31,9 +31,13 @@ export function Summary() {
           </span>
           <span className="text-sm text-muted">{t('gold')}</span>
         </p>
+        {/* Read out once, not every frame of the count-up. */}
+        <p className="sr-only" aria-live="polite">
+          {shown && shown.cost !== null ? `${t('totalCost')}: ${shown.cost} ${t('gold')}` : ''}
+        </p>
         {topUpUsed > 0 && <p className="text-xs text-muted">{t('topUpUsed', { n: topUpUsed })}</p>}
       </div>
-      <div className="hidden md:block">
+      <div className="hidden xl:block">
         <CalculateButton />
       </div>
       <AnimatePresence initial={false}>

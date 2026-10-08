@@ -44,15 +44,15 @@ export function SlotTile({
   return (
     <button
       type="button"
-      aria-label={t('openSlot', { slot: label })}
+      aria-label={t('openSlot', { slot: label }) + (locked ? `, ${t('locked')}` : '')}
       onClick={(event) => onOpen(slot, event.currentTarget)}
       style={quality ? ({ '--q': quality.color } as CSSProperties) : undefined}
       className={`slot-tile group flex min-h-28 min-w-0 flex-col items-center gap-1 p-2 text-center ${AREA[slot]}`}
     >
-      <span className="slot-label flex w-full items-center justify-between text-[0.68rem] tracking-wider text-muted uppercase">
-        <span className="truncate">{label}</span>
+      <span className="slot-label flex w-full items-start justify-between gap-1 text-left text-[0.68rem] leading-tight tracking-wider text-muted uppercase">
+        <span className="line-clamp-2 break-words">{label}</span>
         {locked && (
-          <span title={t('locked')} aria-label={t('locked')} className="text-accent">
+          <span aria-hidden title={t('locked')} className="text-accent">
             ◆
           </span>
         )}
