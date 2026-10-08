@@ -22,10 +22,14 @@ export function locksForClass(catalogue: Catalogue, classId: ClassId, locks: Loc
     locks.weaponType === null || weapons.some((item) => item.weaponType === locks.weaponType);
   const keepSecond =
     locks.secondWeapon === null || weapons.some((item) => item.id === locks.secondWeapon);
-  if (keepType && keepSecond) return locks;
+  const keepSecondType =
+    locks.secondWeaponType === null ||
+    weapons.some((item) => item.weaponType === locks.secondWeaponType);
+  if (keepType && keepSecond && keepSecondType) return locks;
   return {
     ...locks,
     weaponType: keepType ? locks.weaponType : null,
     secondWeapon: keepSecond ? locks.secondWeapon : null,
+    secondWeaponType: keepSecondType ? locks.secondWeaponType : null,
   };
 }

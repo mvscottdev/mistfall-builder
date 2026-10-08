@@ -73,7 +73,17 @@ describe('Second weapon candidates', () => {
     expect(ids(secondWeaponCandidates(weapons, 10, mainLocks))).toEqual([1, 2]);
   });
 
-  test('its only Lock is an exact Item', () => {
-    expect(ids(secondWeaponCandidates(weapons, 10, locks({ secondWeapon: 2 })))).toEqual([2]);
+  test('an exact Item Lock keeps only that Item, whatever its type and quality Locks say', () => {
+    const pinned = locks({ secondWeapon: 2, secondWeaponType: 1, secondWeaponQuality: 3 });
+    expect(ids(secondWeaponCandidates(weapons, 10, pinned))).toEqual([2]);
+  });
+
+  test('its own weapon type and quality Locks keep only matching weapons', () => {
+    expect(ids(secondWeaponCandidates(weapons, 10, locks({ secondWeaponType: 2 })))).toEqual([2]);
+    expect(ids(secondWeaponCandidates(weapons, 10, locks({ secondWeaponQuality: 3 })))).toEqual([
+      1,
+    ]);
+    const both = locks({ secondWeaponType: 1, secondWeaponQuality: 7 });
+    expect(ids(secondWeaponCandidates(weapons, 10, both))).toEqual([]);
   });
 });

@@ -40,7 +40,9 @@ function addContribution(levels: Record<AttributeId, number>, contribution: Cont
 }
 
 /** Levels per Attribute from Built-in effects and Gems of the main Slots. */
-function setLevels(pieces: ShownPiece[]): Record<AttributeId, number> {
+export function setLevels(
+  pieces: Pick<ShownPiece, 'slot' | 'item' | 'gems'>[],
+): Record<AttributeId, number> {
   const levels: Record<AttributeId, number> = {};
   for (const piece of pieces) {
     if (piece.slot === 'weapon2') continue;

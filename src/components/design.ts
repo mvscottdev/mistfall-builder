@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 
 /** The two looks offered while the maintainer picks one (see index.css). */
-export type Design = 'forge' | 'mist';
+export const DESIGNS = ['forge', 'mist'] as const;
+export type Design = (typeof DESIGNS)[number];
 
 const STORAGE_KEY = 'mistfall-builder.design';
 
-function isDesign(value: unknown): value is Design {
-  return value === 'forge' || value === 'mist';
-}
+const isDesign = (value: unknown): value is Design => DESIGNS.includes(value as Design);
 
 /** `?design=` in the URL, else the saved choice, else Forge. */
 function initialDesign(): Design {

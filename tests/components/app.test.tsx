@@ -28,10 +28,9 @@ const calculateButton = () =>
   within(screen.getByRole('region', { name: 'Set cost' })).getByRole('button', {
     name: /^(Calculate|Calculating…)$/,
   });
+// Offense icons show first in the default picker (A, icon grid).
 const addTarget = (name: string) =>
-  fireEvent.change(screen.getByRole('combobox', { name: 'Add a bonus…' }), {
-    target: { value: screen.getByRole('option', { name }).getAttribute('value') },
-  });
+  fireEvent.click(screen.getByRole('button', { name, pressed: false }));
 
 describe('layout', () => {
   test('shows Classes, Targets, every Slot and the price date', () => {
@@ -73,11 +72,11 @@ describe('layout', () => {
 });
 
 describe('Targets', () => {
-  test('a picked Attribute becomes a Target at level 1 and leaves the picker', () => {
+  test('a picked Attribute becomes a Target at level 1 and shows as picked', () => {
     const store = renderApp();
     addTarget('Wrath');
     expect(store.getState().inputs.targets).toEqual([{ attribute: 0, level: 1 }]);
-    expect(screen.queryByRole('option', { name: 'Wrath' })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Wrath', pressed: true })).toBeInTheDocument();
   });
 
   test('+ is disabled at the Budget', () => {

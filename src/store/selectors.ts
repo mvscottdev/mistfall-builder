@@ -22,6 +22,10 @@ import { shownDecodedSet, shownSolvedSet, type ShownSet } from './shown-set';
 export const selectStale = (state: BuildState): boolean =>
   state.resultInputs === null || !sameInputs(state.inputs, state.resultInputs);
 
+/** A solved Set is shown for other inputs than the current ones (a decoded Set never is). */
+export const selectOutdated = (state: BuildState): boolean =>
+  state.result?.kind === 'solved' && selectStale(state);
+
 export const selectClasses = (state: BuildState) => state.catalogue.classes;
 export const selectQualities = (state: BuildState) => state.catalogue.qualities;
 export const selectAttributes = (state: BuildState) => state.catalogue.attributes;

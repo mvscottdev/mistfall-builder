@@ -33,6 +33,14 @@ describe('locksForClass', () => {
     expect(locksForClass(catalogue, to, locks).secondWeapon).toBeNull();
   });
 
+  test('a Second weapon type the new Class has no weapon of is dropped; one it has stays', () => {
+    expect(
+      locksForClass(catalogue, to, { ...NO_LOCKS, secondWeaponType: fromType }).secondWeaponType,
+    ).toBeNull();
+    const kept = { ...NO_LOCKS, secondWeaponType: toType };
+    expect(locksForClass(catalogue, to, kept)).toBe(kept);
+  });
+
   test('weapon Locks that exist for the new Class stay', () => {
     const locks = { ...NO_LOCKS, weaponType: toType, secondWeapon: toWeapon.id };
     expect(locksForClass(catalogue, to, locks)).toBe(locks);

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { SetSlot } from '../domain/types';
 import { useLocalized, useT } from '../i18n/use-t';
@@ -7,35 +7,12 @@ import { selectSlotLabels } from '../store/selectors';
 import type { ShownPiece } from '../store/shown-set';
 import { useBuild } from '../store/use-build';
 import { SlotDetails } from './SlotDetails';
+import { SecondWeaponLocks } from './SecondWeaponLocks';
 import { SlotLocks } from './SlotLocks';
+import { trapKeys } from './trap-keys';
 
 /** From md up the drawer is a side panel, below it a bottom sheet. */
 const isWide = () => window.matchMedia?.('(min-width: 48rem)').matches ?? false;
-
-const FOCUSABLE = 'button, select, input, [href], [tabindex]:not([tabindex="-1"])';
-
-/** Keeps Tab inside the drawer and closes it on Escape. */
-function trapKeys(event: KeyboardEvent<HTMLElement>, onClose: () => void) {
-  if (event.key === 'Escape') {
-    event.stopPropagation();
-    onClose();
-    return;
-  }
-  if (event.key !== 'Tab') return;
-  const focusable = [...event.currentTarget.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
-    (el) => !el.hasAttribute('disabled'),
-  );
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  if (!first || !last) return;
-  if (event.shiftKey && document.activeElement === first) {
-    event.preventDefault();
-    last.focus();
-  } else if (!event.shiftKey && document.activeElement === last) {
-    event.preventDefault();
-    first.focus();
-  }
-}
 
 /**
  * A Slot's Item, mods and Locks: slides in from the side (from the bottom on phones).
@@ -92,11 +69,7 @@ export function SlotDrawer({
         </div>
         <div className="space-y-5 overflow-y-auto overscroll-contain p-4">
           <SlotDetails slot={slot} piece={piece} />
-          {slot === 'weapon2' ? (
-            <p className="text-sm text-muted">{t('secondWeaponNote')}</p>
-          ) : (
-            <SlotLocks slot={slot} />
-          )}
+          {slot === 'weapon2' ? <SecondWeaponLocks /> : <SlotLocks slot={slot} />}
         </div>
       </motion.div>
     </div>,

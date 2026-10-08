@@ -42,6 +42,8 @@ function requestFor(input: GoldenInput): SolveRequest {
     amuletBase: input.amuletBase ?? null,
     ringBase: input.ringBase ?? null,
     secondWeapon: input.weapon2Lock ?? null,
+    secondWeaponType: null,
+    secondWeaponQuality: null,
   };
   return {
     classId: input.classId,
