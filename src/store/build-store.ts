@@ -14,6 +14,7 @@ import { SetCodeError, type SetCodeProblem } from '../setcode/error';
 import type { DecodedSet } from '../setcode/types';
 import { budget, targetLevelCap } from '../solver/budget';
 import { solve, type SolveOutcome } from '../solver/solve';
+import { findAlternatives, type SolvedResult } from './alternatives';
 import { locksForClass } from './class-locks';
 import { defaultInputs, type Inputs } from './inputs';
 import { loadedInputs } from './load-as-target';
@@ -33,7 +34,14 @@ export interface BuildState {
   result: Result | null;
   /** The inputs `result` was solved for; null when nothing was solved for it. */
   resultInputs: Inputs | null;
-  /** A solve is running; Calculate is ignored until it ends. */
+  /**
+   * Alternatives found so far for `resultInputs`, cheapest Set first; empty
+   * unless a solved Set is shown. `result` is one of them.
+   */
+  alternatives: SolvedResult[];
+  /** The solver found no Alternative after the last one in `alternatives`. */
+  noMoreAlternatives: boolean;
+  /** A solve is running; Calculate and Alternative picks are ignored until it ends. */
   busy: boolean;
 
   setLanguage: (language: Language) => void;
@@ -49,6 +57,11 @@ export interface BuildState {
   setSlotQuality: (slot: Slot, quality: QualityId | null) => void;
   /** Solves the current inputs in the Worker and shows the outcome. */
   calculate: () => Promise<void>;
+  /**
+   * Shows the Alternative at `index` (0 = the cheapest Set), solving it and
+   * any before it that aren't found yet; past the last one, the shown Set stays.
+   */
+  showAlternative: (index: number) => Promise<void>;
   /**
    * Reads a Set code and shows its Set as it is, switching to its Class (ADR-0010).
    * Returns why the code can't be read, or null.
@@ -73,6 +86,8 @@ export function createBuildStore(catalogue: Catalogue) {
       inputs: defaultInputs(catalogue),
       result: null,
       resultInputs: null,
+      alternatives: [],
+      noMoreAlternatives: false,
       busy: false,
 
       setLanguage: (language) => {
@@ -129,7 +144,36 @@ export function createBuildStore(catalogue: Catalogue) {
         }
         // A Set code shown meanwhile stays: this outcome is for inputs it replaced.
         if (get().result !== shown) return set({ busy: false });
-        set({ result, resultInputs: asked, busy: false });
+        set({
+          result,
+          resultInputs: asked,
+          alternatives: result.kind === 'solved' ? [result] : [],
+          noMoreAlternatives: false,
+          busy: false,
+        });
+      },
+
+      showAlternative: async (index) => {
+        const { busy, resultInputs: asked, alternatives, noMoreAlternatives } = get();
+        if (busy || !asked || !alternatives.length) return;
+        if (index >= alternatives.length && noMoreAlternatives) return;
+        set({ busy: true });
+        let next: Awaited<ReturnType<typeof findAlternatives>>;
+        try {
+          next = await findAlternatives(catalogue, asked, alternatives, index);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          if (get().resultInputs === asked) set({ result: { kind: 'failed', message } });
+          return set({ busy: false, alternatives: [] });
+        }
+        // A Set code shown meanwhile stays: these Alternatives are for inputs it replaced.
+        if (get().resultInputs !== asked) return set({ busy: false });
+        set({
+          result: next.found[index] ?? get().result,
+          alternatives: next.found,
+          noMoreAlternatives: next.noMore,
+          busy: false,
+        });
       },
 
       importSetCode: (code) => {
@@ -141,7 +185,7 @@ export function createBuildStore(catalogue: Catalogue) {
           throw error;
         }
         get().setClass(decoded.classId);
-        set({ result: { kind: 'decoded', set: decoded }, resultInputs: null });
+        set({ result: { kind: 'decoded', set: decoded }, resultInputs: null, alternatives: [] });
         return null;
       },
 

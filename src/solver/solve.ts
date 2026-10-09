@@ -1,4 +1,4 @@
-import type { Catalogue } from '../domain/types';
+import type { Catalogue, SetPiece } from '../domain/types';
 import type { SolveOutcome, SolveRequest } from './solve-set';
 
 export type { SolveOutcome, SolveRequest } from './solve-set';
@@ -7,6 +7,8 @@ export type { SolveOutcome, SolveRequest } from './solve-set';
 export interface WorkerRequest {
   id: number;
   request: SolveRequest;
+  /** Pieces of earlier Sets the answer must differ from (an Alternative). */
+  avoid: SetPiece[][];
   catalogue?: Catalogue;
 }
 
@@ -47,11 +49,16 @@ function startWorker(): Worker {
 
 /**
  * Finds the cheapest Set in a Web Worker, so the page stays responsive while
- * HiGHS works. Rejects with the solver's message if HiGHS fails; there is no fallback.
+ * HiGHS works; with `avoid`, the cheapest Set that differs from those earlier
+ * ones. Rejects with the solver's message if HiGHS fails; there is no fallback.
  */
-export function solve(catalogue: Catalogue, request: SolveRequest): Promise<SolveOutcome> {
+export function solve(
+  catalogue: Catalogue,
+  request: SolveRequest,
+  avoid: SetPiece[][] = [],
+): Promise<SolveOutcome> {
   worker ??= startWorker();
-  const message: WorkerRequest = { id: ++lastId, request };
+  const message: WorkerRequest = { id: ++lastId, request, avoid };
   if (catalogue !== catalogueInWorker) message.catalogue = catalogue;
   catalogueInWorker = catalogue;
   const target = worker;

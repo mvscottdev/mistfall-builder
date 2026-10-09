@@ -55,6 +55,9 @@ flowchart LR
   the page never freezes.
 - **Calculate is explicit.** Changing inputs marks the result as stale; nothing
   is re-solved until you click Calculate.
+- **Variants on request.** After a solve, buttons 1–5 show other Sets for the
+  same Targets, cheapest first. Each has another Item, or other Gems, than every
+  Variant before it. A Variant is solved only when you pick it.
 
 ## 📖 Words used here
 

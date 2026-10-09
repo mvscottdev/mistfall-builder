@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useT } from '../i18n/use-t';
 import { selectShownSet, selectOutdated } from '../store/selectors';
 import { useBuild } from '../store/use-build';
+import { AlternativePicker } from './AlternativePicker';
 import { CalculateButton } from './CalculateButton';
 import { CostDisplay } from './CostDisplay';
 import { LevelsList } from './LevelsList';
@@ -54,6 +55,7 @@ export function Summary() {
         )}
       </AnimatePresence>
       <ResultMessage />
+      <AlternativePicker />
       <LevelsList />
       <SetCodeBox />
       <SetCodeImport />

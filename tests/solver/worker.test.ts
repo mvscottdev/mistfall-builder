@@ -44,22 +44,29 @@ afterEach(() => {
 describe('the solver Worker', () => {
   test('answers a request with the outcome, solved with the catalogue it was sent', async () => {
     const send = await startWorker();
-    await send({ id: 7, request, catalogue });
-    expect(mocks.solveSet).toHaveBeenCalledWith(catalogue, highs, request);
+    await send({ id: 7, request, avoid: [], catalogue });
+    expect(mocks.solveSet).toHaveBeenCalledWith(catalogue, highs, request, []);
     expect(replies()).toEqual([{ id: 7, outcome: { kind: 'infeasible' } }]);
   });
 
   test('keeps the catalogue for later requests and loads HiGHS once', async () => {
     const send = await startWorker();
-    await send({ id: 1, request, catalogue });
-    await send({ id: 2, request });
-    expect(mocks.solveSet).toHaveBeenLastCalledWith(catalogue, highs, request);
+    await send({ id: 1, request, avoid: [], catalogue });
+    await send({ id: 2, request, avoid: [] });
+    expect(mocks.solveSet).toHaveBeenLastCalledWith(catalogue, highs, request, []);
     expect(mocks.highsLoader).toHaveBeenCalledTimes(1);
+  });
+
+  test('passes the earlier Sets an Alternative must differ from', async () => {
+    const send = await startWorker();
+    const avoid = [[{ slot: 'helmet' as const, itemId: 1, gemIds: [10] }]];
+    await send({ id: 1, request, avoid, catalogue });
+    expect(mocks.solveSet).toHaveBeenCalledWith(catalogue, highs, request, avoid);
   });
 
   test('a request before any catalogue gets an error reply', async () => {
     const send = await startWorker();
-    await send({ id: 1, request });
+    await send({ id: 1, request, avoid: [] });
     expect(replies()).toEqual([{ id: 1, error: 'the solver got no catalogue' }]);
     expect(mocks.solveSet).not.toHaveBeenCalled();
   });
@@ -69,8 +76,8 @@ describe('the solver Worker', () => {
     mocks.solveSet.mockImplementationOnce(() => {
       throw new Error('HiGHS crashed');
     });
-    await send({ id: 1, request, catalogue });
-    await send({ id: 2, request });
+    await send({ id: 1, request, avoid: [], catalogue });
+    await send({ id: 2, request, avoid: [] });
     expect(replies()).toEqual([
       { id: 1, error: 'HiGHS crashed' },
       { id: 2, outcome: { kind: 'infeasible' } },

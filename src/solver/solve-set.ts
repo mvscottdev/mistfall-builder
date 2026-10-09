@@ -3,10 +3,12 @@ import type {
   Catalogue,
   ClassId,
   Locks,
+  SetPiece,
   SolvedSet,
   Target,
   TopUp,
 } from '../domain/types';
+import { avoidCut } from './avoid';
 import { budget } from './budget';
 import { solveMip, type Highs } from './mip';
 import { setVariants } from './variants';
@@ -26,8 +28,17 @@ export type SolveOutcome =
   /** No Set meets the Targets. */
   | { kind: 'infeasible' };
 
-/** The cheapest Set for the request; at equal cost, the one with least Top-up. */
-export function solveSet(catalogue: Catalogue, highs: Highs, request: SolveRequest): SolveOutcome {
+/**
+ * The cheapest Set for the request; at equal cost, the one with least Top-up.
+ * With `avoid` (the pieces of earlier Sets) it is the cheapest Alternative:
+ * it differs from each earlier Set in an Item or in the Gems it buys.
+ */
+export function solveSet(
+  catalogue: Catalogue,
+  highs: Highs,
+  request: SolveRequest,
+  avoid: SetPiece[][] = [],
+): SolveOutcome {
   const { classId, targets, locks, topUp } = request;
   const requested = targets.reduce((sum, target) => sum + target.level, 0);
   const budgetPoints = budget(catalogue, classId, locks);
@@ -40,7 +51,14 @@ export function solveSet(catalogue: Catalogue, highs: Highs, request: SolveReque
   const slots = setVariants(catalogue, classId, locks, order);
   // Deliberate: the old code built an LP with an empty Slot row here, which also ended infeasible.
   if (slots.some((slot) => slot.variants.length === 0)) return { kind: 'infeasible' };
-  const choice = solveMip(highs, { slots, targets, topUp });
+  const cuts = avoid.map((pieces, i) => avoidCut(slots, pieces, order, i));
+  if (cuts.includes(null)) return { kind: 'infeasible' };
+  const choice = solveMip(highs, {
+    slots,
+    targets,
+    topUp,
+    avoid: cuts.filter((cut) => cut !== null),
+  });
   if (!choice) return { kind: 'infeasible' };
 
   const topUpSpent: Record<AttributeId, number> = {};
