@@ -12,13 +12,13 @@ let highs: Promise<Highs> | null = null;
 let catalogue: Catalogue | null = null;
 
 scope.onmessage = async (event: MessageEvent<WorkerRequest>) => {
-  const { id, request } = event.data;
+  const { id, request, avoid } = event.data;
   if (event.data.catalogue) catalogue = event.data.catalogue;
   let reply: WorkerReply;
   try {
     if (!catalogue) throw new Error('the solver got no catalogue');
     highs ??= highsLoader({ locateFile: () => wasmUrl });
-    reply = { id, outcome: solveSet(catalogue, await highs, request) };
+    reply = { id, outcome: solveSet(catalogue, await highs, request, avoid) };
   } catch (error) {
     // After an error the HiGHS instance may be unusable; load a fresh one next time.
     highs = null;

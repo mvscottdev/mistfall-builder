@@ -16,6 +16,12 @@ const solved: SolveOutcome = {
   set: { cost: 609, pieces: [], topUp: {}, topUpUsed: 0 },
 };
 
+const golden = JSON.parse(goldenRaw).scenarios as {
+  label: string;
+  output: { code: string } | null;
+}[];
+const codeOf = (label: string) => golden.find((s) => s.label === label)?.output?.code ?? '';
+
 let store = createBuildStore(catalogue);
 const state = () => store.getState();
 
@@ -184,12 +190,6 @@ describe('language', () => {
 });
 
 describe('Set code import (ADR-0010)', () => {
-  const golden = JSON.parse(goldenRaw).scenarios as {
-    label: string;
-    output: { code: string } | null;
-  }[];
-  const codeOf = (label: string) => golden.find((s) => s.label === label)?.output?.code ?? '';
-
   test('a pasted code shows its Set as it is and switches to its Class', () => {
     const problem = state().importSetCode(` ${codeOf('cls11-n1')} `);
     expect(problem).toBeNull();
@@ -237,5 +237,84 @@ describe('Set code import (ADR-0010)', () => {
     const before = state().inputs;
     state().loadAsTarget();
     expect(state().inputs).toBe(before);
+  });
+});
+
+describe('Alternatives', () => {
+  const solvedAt = (cost: number): SolveOutcome => ({
+    kind: 'solved',
+    set: { cost, pieces: [{ slot: 'helmet', itemId: cost, gemIds: [] }], topUp: {}, topUpUsed: 0 },
+  });
+  const piecesOf = (outcome: SolveOutcome) => (outcome.kind === 'solved' ? outcome.set.pieces : []);
+
+  test('a solved Set is the first Alternative; nothing more is solved until one is picked', async () => {
+    await state().calculate();
+    expect(state().alternatives).toEqual([solved]);
+    expect(state().result).toBe(state().alternatives[0]);
+    expect(solveMock).toHaveBeenCalledTimes(1);
+  });
+
+  test('picking the third solves the second and third in turn, each avoiding all before it', async () => {
+    const second = solvedAt(700);
+    const third = solvedAt(800);
+    await state().calculate();
+    solveMock.mockResolvedValueOnce(second).mockResolvedValueOnce(third);
+    await state().showAlternative(2);
+    expect(solveMock.mock.calls.slice(1).map(([, , avoid]) => avoid)).toEqual([
+      [piecesOf(solved)],
+      [piecesOf(solved), piecesOf(second)],
+    ]);
+    expect(state().result).toBe(third);
+    expect(state().alternatives).toEqual([solved, second, third]);
+  });
+
+  test('a found Alternative is shown again without solving', async () => {
+    await state().calculate();
+    solveMock.mockResolvedValueOnce(solvedAt(700));
+    await state().showAlternative(1);
+    await state().showAlternative(0);
+    expect(state().result).toBe(solved);
+    await state().showAlternative(1);
+    expect(solveMock).toHaveBeenCalledTimes(2);
+  });
+
+  test('when the solver finds no more, the shown Set stays and later picks are not solved', async () => {
+    await state().calculate();
+    solveMock.mockResolvedValueOnce({ kind: 'infeasible' });
+    await state().showAlternative(1);
+    expect(state().result).toBe(solved);
+    expect(state().noMoreAlternatives).toBe(true);
+    await state().showAlternative(3);
+    expect(solveMock).toHaveBeenCalledTimes(2);
+  });
+
+  test('Alternatives are solved for the inputs of the shown Set, not later edits', async () => {
+    await state().calculate();
+    const asked = state().resultInputs;
+    state().addTarget(5);
+    await state().showAlternative(1);
+    expect(solveMock).toHaveBeenLastCalledWith(catalogue, asked, [piecesOf(solved)]);
+  });
+
+  test('a new Calculate starts the list again', async () => {
+    await state().calculate();
+    await state().showAlternative(1);
+    state().addTarget(5);
+    await state().calculate();
+    expect(state().alternatives).toEqual([solved]);
+    expect(state().noMoreAlternatives).toBe(false);
+  });
+
+  test('a Set code imported while an Alternative is solved stays shown', async () => {
+    await state().calculate();
+    let finish: (outcome: SolveOutcome) => void = () => {};
+    solveMock.mockReturnValueOnce(new Promise((resolve) => (finish = resolve)));
+    const picking = state().showAlternative(1);
+    state().importSetCode(codeOf('cls10-n1'));
+    finish(solvedAt(700));
+    await picking;
+    expect(state().result?.kind).toBe('decoded');
+    expect(state().alternatives).toEqual([]);
+    expect(state().busy).toBe(false);
   });
 });

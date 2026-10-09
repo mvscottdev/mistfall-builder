@@ -1,11 +1,19 @@
 import type { Target, TopUp } from '../domain/types';
 import type { SlotVariants } from './variants';
 
+/** Rows, and the binaries they add, that keep one earlier Set from coming back. */
+export interface AvoidCut {
+  rows: string[];
+  binaries: string[];
+}
+
 /** What the MIP is built from. */
 export interface LpModel {
   slots: SlotVariants[];
   targets: Target[];
   topUp: TopUp;
+  /** One per earlier Set an Alternative must differ from; none for the first Set. */
+  avoid?: AvoidCut[];
 }
 
 export type LpGoal =
@@ -39,6 +47,7 @@ function constraints(model: LpModel, goal: LpGoal, firstVariant: string): string
     rows.push(` attr${d}: ${terms.join(' + ')} >= ${target.level}`);
   });
   if (targets.length) rows.push(` topup: ${targets.map(topUpName).join(' + ')} <= ${topUp.total}`);
+  for (const cut of model.avoid ?? []) rows.push(...cut.rows);
   if (goal.minimise === 'topUp') {
     const cost = priceTerms(model).join(' + ') || `0 ${firstVariant}`;
     rows.push(` costcap: ${cost} <= ${goal.costCap}`);
@@ -53,6 +62,7 @@ function constraints(model: LpModel, goal: LpGoal, firstVariant: string): string
  * - `t_<attribute>`: integer Top-up for a Target, 0 ≤ t ≤ min(per-Attribute cap, level),
  *   all together ≤ the Top-up total.
  * - Per Target: levels from the chosen variants + Top-up ≥ the Target level.
+ * - Per earlier Set to avoid: the rows of its cut (see avoidCut).
  *
  * The text is kept byte-for-byte as the old solver wrote it: HiGHS breaks ties
  * between equal-cost Sets by variable and row order.
@@ -61,6 +71,7 @@ export function lpText(model: LpModel, goal: LpGoal): string {
   const { slots, targets, topUp } = model;
   const binaries = slots.flatMap((slot, s) => slot.variants.map((_, v) => variantName(s, v)));
   const firstVariant = binaries[0] ?? '';
+  for (const cut of model.avoid ?? []) binaries.push(...cut.binaries);
   const objective =
     goal.minimise === 'cost' ? priceTerms(model) : targets.map((t) => `1 ${topUpName(t)}`);
 

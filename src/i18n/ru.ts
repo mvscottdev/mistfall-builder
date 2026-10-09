@@ -47,6 +47,12 @@ export const ru = {
   overBudget: 'Цели просят {requested} ур., а сет даёт максимум {budget} + {topUp} вина.',
   infeasible: 'Ни один сет не даёт эти цели. Ослабьте цели или замки.',
   failed: 'Ошибка решателя: {message}',
+  alternatives: 'Варианты',
+  alternativesHint:
+    'Другие сеты под те же цели: в каждом другая вещь или другие камни. Цена та же или выше.',
+  alternative: 'Вариант {n}',
+  alternativeCost: 'Вариант {n}: {cost} золота',
+  noMoreAlternatives: 'Других сетов под эти цели с другими вещами или камнями нет.',
   levels: 'Уровни бонусов',
   levelsHint: 'Предметы + вино / цель',
   extraBonuses: 'Ещё в сете',

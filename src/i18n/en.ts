@@ -47,6 +47,12 @@ export const en: Record<TextKey, string> = {
   overBudget: 'Targets ask for {requested} levels; the set gives at most {budget} + {topUp} wine.',
   infeasible: 'No set meets these Targets. Lower a Target or loosen a Lock.',
   failed: 'Solver error: {message}',
+  alternatives: 'Variants',
+  alternativesHint:
+    'Other sets for the same Targets: each has another Item or other Gems. Same price or dearer.',
+  alternative: 'Variant {n}',
+  alternativeCost: 'Variant {n}: {cost} gold',
+  noMoreAlternatives: 'No other set meets these Targets with other Items or Gems.',
   levels: 'Bonus levels',
   levelsHint: 'Items + wine / Target',
   extraBonuses: 'Also in the set',

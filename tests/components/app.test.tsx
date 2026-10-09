@@ -198,3 +198,49 @@ describe('Calculate', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Solver error: HiGHS crashed');
   });
 });
+
+describe('Variants (Alternatives)', () => {
+  const variants = () => screen.getByRole('group', { name: 'Variants' });
+
+  test('show only once a Set is solved, the cheapest one pressed', async () => {
+    renderApp();
+    expect(screen.queryByRole('group', { name: 'Variants' })).toBeNull();
+    await act(async () => fireEvent.click(calculateButton()));
+    const buttons = within(variants()).getAllByRole('button');
+    expect(buttons).toHaveLength(5);
+    expect(buttons[0]).toHaveAttribute('aria-pressed', 'true');
+    expect(buttons[0]).toHaveAccessibleName('Variant 1: 609 gold');
+    expect(buttons[1]).toHaveAccessibleName('Variant 2');
+  });
+
+  test('a picked Variant is solved, shown, and named with its cost', async () => {
+    renderApp();
+    await act(async () => fireEvent.click(calculateButton()));
+    solveMock.mockResolvedValueOnce({
+      kind: 'solved',
+      set: { ...solved.set, cost: 650 },
+    } as SolveOutcome);
+    await act(async () =>
+      fireEvent.click(within(variants()).getByRole('button', { name: 'Variant 2' })),
+    );
+    const second = within(variants()).getByRole('button', { name: 'Variant 2: 650 gold' });
+    expect(second).toHaveAttribute('aria-pressed', 'true');
+    expect(second).toHaveTextContent('+41');
+    expect(screen.getByText('Set cost: 650 gold')).toBeInTheDocument();
+  });
+
+  test('when there is no other Set, the rest are off and the summary says so', async () => {
+    renderApp();
+    await act(async () => fireEvent.click(calculateButton()));
+    solveMock.mockResolvedValueOnce({ kind: 'infeasible' });
+    await act(async () =>
+      fireEvent.click(within(variants()).getByRole('button', { name: 'Variant 4' })),
+    );
+    const buttons = within(variants()).getAllByRole('button');
+    expect(buttons.slice(1).every((button) => button.hasAttribute('disabled'))).toBe(true);
+    expect(buttons[0]).toHaveAttribute('aria-pressed', 'true');
+    expect(
+      screen.getByText('No other set meets these Targets with other Items or Gems.'),
+    ).toBeInTheDocument();
+  });
+});
